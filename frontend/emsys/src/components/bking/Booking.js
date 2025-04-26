@@ -5,6 +5,7 @@ import "jspdf-autotable";
 import axios from 'axios';
 import './book.css';
 
+
 const EventBookingForm = () => {
   const navigate = useNavigate();
   const [showReceipt, setShowReceipt] = useState(false);
@@ -201,7 +202,7 @@ const EventBookingForm = () => {
   };
 
   const goHome = () => {
-    navigate('/home');
+    navigate('/dashboard');
   };
 
   return (

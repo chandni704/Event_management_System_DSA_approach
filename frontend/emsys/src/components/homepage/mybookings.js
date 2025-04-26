@@ -36,7 +36,7 @@ const YourComponent = () => {
   };
 
   const handleBackToHome = () => {
-    navigate('/home'); // Navigate back to the home page
+    navigate('/dashboard'); // Navigate back to the home page
   };
 
   return (

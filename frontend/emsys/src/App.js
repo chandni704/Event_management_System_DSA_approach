@@ -26,6 +26,7 @@ import VenuePage from './components/venues/Uday_bhavan.js';
 import Admin_login from "./components/admin/AdminLogin.js";
 import Admin_dashboard from "./components/admin/AdminDashboard.js";
 
+
 import HotelDetail from "./components/homepage/HotelDetail.js";
 
 function App() {
@@ -50,6 +51,8 @@ function App() {
         <Route path="/naming" element={<PrivateRoute element={<Namingcremony />} />} />
         <Route path="/concert" element={<PrivateRoute element={<Concert />} />} />
         <Route path="/mybookings" element={<PrivateRoute element={<YourComponent />} />} />
+        <Route path="/book/:hotelName" element={<EventBookingForm />} />
+
 
         {/* ✅ Dynamic venue route */}
         <Route path="/venue/:venueName" element={<PrivateRoute element={<VenuePage />} />} />
