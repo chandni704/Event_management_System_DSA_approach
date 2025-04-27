@@ -1,31 +1,42 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import axios from 'axios';
 import './book.css';
 
-
 const EventBookingForm = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [showReceipt, setShowReceipt] = useState(false);
 
+  const { selectedDate, fullName, email } = location.state || {};
   const bookingID = `BOOK-${Math.random().toString(36).substr(2, 8).toUpperCase()}`;
+
   const [formData, setFormData] = useState({
-    fullName: '',
+    fullName: fullName || '',
     aadharNumber: '',
     phoneNumber: '',
     gender: '',
     age: '',
     address: '',
-    email: '',
-    eventDate: '',
+    email: email || '',
+    eventDate: selectedDate ? new Date(selectedDate).toISOString().split('T')[0] : '',
     event: '',
     hall: '',
     BID: bookingID
   });
 
   const [paymentId, setPaymentId] = useState('');
+
+  useEffect(() => {
+    const url = window.location.pathname;
+    const hotelName = decodeURIComponent(url.split("/book/")[1]);
+    setFormData((prev) => ({
+      ...prev,
+      hall: hotelName,
+    }));
+  }, [selectedDate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,16 +54,10 @@ const EventBookingForm = () => {
   };
 
   const validateForm = () => {
-    const { fullName, aadharNumber, phoneNumber, gender, age, address, email, eventDate, event, hall } = formData;
+    const { aadharNumber, phoneNumber, gender, age, address, event, hall } = formData;
 
-    if (!fullName || !aadharNumber || !phoneNumber || !gender || !age || !address || !email || !eventDate || !event || !hall) {
+    if (!aadharNumber || !phoneNumber || !gender || !age || !address || !event || !hall) {
       alert('Please fill all the fields!');
-      return false;
-    }
-
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    if (!emailRegex.test(email)) {
-      alert('Please enter a valid email address!');
       return false;
     }
 
@@ -87,15 +92,11 @@ const EventBookingForm = () => {
     }
 
     try {
-      // Create Razorpay order
-      const orderResponse = await axios.post('http://localhost:5000/create-order', {
-        amount: 100 // Rs. 500 (in paisa)
-      });
-
+      const orderResponse = await axios.post('http://localhost:5000/create-order', { amount: 100 });
       const { amount, id: order_id, currency } = orderResponse.data;
 
       const options = {
-        key: 'rzp_test_iJR7LQJdRvW30C', // Replace with your Razorpay key
+        key: 'rzp_test_iJR7LQJdRvW30C',
         amount: amount.toString(),
         currency: currency,
         name: 'Event Management System',
@@ -110,6 +111,7 @@ const EventBookingForm = () => {
           };
 
           setPaymentId(response.razorpay_payment_id);
+
           await submitBooking(updatedData);
         },
         prefill: {
@@ -135,17 +137,24 @@ const EventBookingForm = () => {
 
   const submitBooking = async (data) => {
     try {
-      const response = await axios.post('http://localhost:5000/submit-form', data, {
+      // Save in main Booking collection
+      await axios.post('http://localhost:5000/submit-form', data, {
         headers: { 'Content-Type': 'application/json' },
       });
 
-      if (response.status === 200 && response.data.ok) {
-        alert('Booking successful!');
-        setFormData(data);
-        setShowReceipt(true);
-      } else {
-        alert('Error in booking. Please try again.');
-      }
+      // Save separately in Hotel-specific collection
+      await axios.post(`http://localhost:5000/hotel/${encodeURIComponent(formData.hall)}/book-date`, {
+        name: data.fullName,
+        email: data.email,
+        selectedDate: data.eventDate,
+        event: data.event,
+      }, {
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      alert('Booking successful!');
+      setFormData(data);
+      setShowReceipt(true);
     } catch (error) {
       console.error('Error submitting the form:', error);
       alert('An error occurred while submitting the form.');
@@ -154,7 +163,6 @@ const EventBookingForm = () => {
 
   const downloadReceipt = () => {
     const doc = new jsPDF();
-
     doc.setFontSize(20);
     doc.setFont('helvetica', 'bold');
     doc.text('Booking Receipt', 105, 20, { align: 'center' });
@@ -187,18 +195,7 @@ const EventBookingForm = () => {
   };
 
   const resetForm = () => {
-    setFormData({
-      fullName: '',
-      aadharNumber: '',
-      phoneNumber: '',
-      gender: '',
-      age: '',
-      address: '',
-      email: '',
-      eventDate: '',
-      event: '',
-      hall: ''
-    });
+    navigate(-1); // go back to hotel detail
   };
 
   const goHome = () => {
@@ -211,13 +208,11 @@ const EventBookingForm = () => {
         <div className="form-container">
           <h2>Event Booking Form</h2>
           <form onSubmit={handleBooking}>
-            {/* form inputs same as before */}
-            {/* ... */}
             <label htmlFor="fullname">Full Name</label>
-            <input type="text" id="fullname" name="fullName" value={formData.fullName} onChange={handleChange} placeholder="Prashant Uppar" />
+            <input type="text" id="fullname" name="fullName" value={formData.fullName} disabled />
 
             <label htmlFor="aadharNumber">Aadhar Number</label>
-            <input type="text" id="aadharNumber" name="aadharNumber" value={formData.aadharNumber} onChange={handleChange} placeholder="457812459712" />
+            <input type="text" id="aadharNumber" name="aadharNumber" value={formData.aadharNumber} onChange={handleChange} />
 
             <label htmlFor="phoneNumber">Phone Number</label>
             <input type="text" id="phoneNumber" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} />
@@ -241,10 +236,10 @@ const EventBookingForm = () => {
             <input type="text" id="address" name="address" value={formData.address} onChange={handleChange} />
 
             <label htmlFor="email">Email</label>
-            <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} placeholder="prashantuppar2004@gmail.com" />
+            <input type="email" id="email" name="email" value={formData.email} disabled />
 
             <label htmlFor="date">Event Date</label>
-            <input type="date" id="date" name="eventDate" value={formData.eventDate} onChange={handleChange} />
+            <input type="date" id="date" name="eventDate" value={formData.eventDate} disabled />
 
             <label htmlFor="event">Event Type</label>
             <select name="event" id="event" value={formData.event} onChange={handleChange}>
@@ -258,51 +253,22 @@ const EventBookingForm = () => {
               <option value="Party">Party</option>
             </select>
 
-            <label htmlFor="hall">Select Venue</label>
-            <select name="hall" id="hall" value={formData.hall} onChange={handleChange}>
-              <option value="">Choose Your Venue</option>
-              <option value="Garden Hall">Garden Hall</option>
-              <option value="Swimming Pool Pavilion">Swimming Pool Pavilion</option>
-              <option value="Elegant Ballroom">Elegant Ballroom</option>
-              <option value="Terrace Lounge">Terrace Lounge</option>
-              <option value="Majestic Courtyard">Majestic Courtyard</option>
-              <option value="Sky Lounge">Sky Lounge</option>
-            </select>
+            <label htmlFor="hall">Venue</label>
+            <input type="text" id="hall" name="hall" value={formData.hall} disabled />
 
             <div className="button-container">
               <input type="submit" value="Book Now" />
-              <input type="button" value="Reset" onClick={resetForm} />
+              <input type="button" value="Select Another Date" onClick={resetForm} />
               <input type="button" value="Go Home" onClick={goHome} />
             </div>
           </form>
         </div>
       ) : (
         <div className="receipt-container">
-          <h2>Booking Receipt</h2>
-          <table>
-            <tbody>
-              <tr><td>Name</td><td>{formData.fullName}</td></tr>
-              <tr><td>Aadhar Number</td><td>{formData.aadharNumber}</td></tr>
-              <tr><td>Phone</td><td>{formData.phoneNumber}</td></tr>
-              <tr><td>Gender</td><td>{formData.gender}</td></tr>
-              <tr><td>Age</td><td>{formData.age}</td></tr>
-              <tr><td>Email</td><td>{formData.email}</td></tr>
-              <tr><td>Address</td><td>{formData.address}</td></tr>
-              <tr><td>Event Date</td><td>{formData.eventDate}</td></tr>
-              <tr><td>Event Type</td><td>{formData.event}</td></tr>
-              <tr><td>Venue</td><td>{formData.hall}</td></tr>
-              <tr><td>Booking ID</td><td>{formData.BID}</td></tr>
-              <tr><td>Payment ID</td><td>{paymentId}</td></tr>
-            </tbody>
-          </table>
-          <div className="button-container">
-            <button onClick={downloadReceipt}>Download PDF</button>
-            <button onClick={goHome}>Go Home</button>
-          </div>
+          {/* Receipt after successful booking */}
         </div>
-      )
-      }
-    </div >
+      )}
+    </div>
   );
 };
 

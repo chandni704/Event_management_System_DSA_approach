@@ -28,7 +28,8 @@ mongoose
   .then(() => console.log('Connected to MongoDB Atlas'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-// Schemas & Models
+// ─── SCHEMAS & MODELS ─────────────────────────────────────────────────────
+
 const bookingSchema = new mongoose.Schema({
   fullName: String,
   aadharNumber: String,
@@ -54,11 +55,10 @@ const otpSchema = new mongoose.Schema({
   expiresAt: Date,
 });
 
+// Default models
 const Booking = mongoose.model('Booking', bookingSchema);
 const User = mongoose.model('User', userSchema);
 const OTP = mongoose.model('OTP', otpSchema);
-
-let loggedInUserEmail = null;
 
 // Razorpay instance
 const razorpay = new Razorpay({
@@ -68,35 +68,52 @@ const razorpay = new Razorpay({
 
 // Nodemailer transporter
 const transporter = nodemailer.createTransport({
-  service: 'gmail', // change to 'Outlook' or custom SMTP if needed
+  service: 'gmail',
   auth: {
     user: process.env.EMAIL_USERNAME,
     pass: process.env.EMAIL_PASSWORD,
   },
 });
 
-// Utility: 6‑digit OTP
+let loggedInUserEmail = null;
+
+// ─── UTILITY FUNCTIONS ─────────────────────────────────────────────────────
+
+// Generate OTP
 const generateOTP = () => Math.floor(100000 + Math.random() * 900000).toString();
 
-// ─── OTP ROUTES ────────────────────────────────────────────────────────────
+// Dynamically create model for each hotel
+const getHotelBookingModel = (hotelName) => {
+  const modelName = `${hotelName.replace(/\s+/g, '')}Bookings`;
+  if (mongoose.models[modelName]) {
+    return mongoose.models[modelName];
+  } else {
+    return mongoose.model(modelName, new mongoose.Schema({
+      name: String,
+      email: String,
+      selectedDate: Date,
+      event: String,
+    }));
+  }
+};
 
-// Send (or resend) OTP
+// ─── ROUTES ─────────────────────────────────────────────────────────────────
+
+// ── OTP ROUTES ──
 app.post('/send-otp', async (req, res) => {
   const { email } = req.body;
   if (!email) return res.status(400).json({ success: false, message: 'Email is required' });
 
   try {
     const otp = generateOTP();
-    const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
 
-    // Upsert the OTP record
     await OTP.findOneAndUpdate(
       { email },
       { otp, expiresAt },
       { upsert: true, new: true }
     );
 
-    // Send it
     await transporter.sendMail({
       from: process.env.EMAIL_USERNAME,
       to: email,
@@ -111,36 +128,28 @@ app.post('/send-otp', async (req, res) => {
   }
 });
 
-// Verify OTP and create user
+// ── SIGNUP ──
 app.post('/submit-signup', async (req, res) => {
   const { email, username, password, otp } = req.body;
   if (!email || !username || !password || !otp) {
-    return res.status(400).json({ success: false, message: 'All fields (email, username, password, otp) are required' });
+    return res.status(400).json({ success: false, message: 'All fields are required' });
   }
 
   try {
-    // Check OTP
     const record = await OTP.findOne({ email });
-    if (!record) {
-      return res.status(400).json({ success: false, message: 'No OTP requested for this email' });
-    }
+    if (!record) return res.status(400).json({ success: false, message: 'No OTP requested' });
     if (record.expiresAt < new Date()) {
       await OTP.deleteOne({ email });
-      return res.status(400).json({ success: false, message: 'OTP has expired' });
+      return res.status(400).json({ success: false, message: 'OTP expired' });
     }
-    if (record.otp !== otp) {
-      return res.status(400).json({ success: false, message: 'Invalid OTP' });
-    }
+    if (record.otp !== otp) return res.status(400).json({ success: false, message: 'Invalid OTP' });
 
-    // Remove used OTP
     await OTP.deleteOne({ email });
 
-    // Check if user exists
     if (await User.exists({ email })) {
-      return res.status(400).json({ success: false, message: 'Email is already registered' });
+      return res.status(400).json({ success: false, message: 'Email already registered' });
     }
 
-    // Hash & save user
     const hashed = await bcrypt.hash(password, 10);
     await new User({ email, username, password: hashed }).save();
 
@@ -151,14 +160,13 @@ app.post('/submit-signup', async (req, res) => {
   }
 });
 
-// ─── LOGIN & BOOKING ROUTES (unchanged) ────────────────────────────────────
-
+// ── LOGIN ──
 app.post('/submit-login', async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(400).json({ success: false, message: 'Invalid email or password' });
+      return res.status(400).json({ success: false, message: 'Invalid credentials' });
     }
     loggedInUserEmail = email;
     res.json({ success: true, message: 'Login successful' });
@@ -167,15 +175,30 @@ app.post('/submit-login', async (req, res) => {
   }
 });
 
-app.post('/submit-form', async (req, res) => {
+// ── LOGOUT ──
+app.post('/logout', (_req, res) => {
+  loggedInUserEmail = null;
+  res.json({ message: 'Logged out' });
+});
+
+// ── GET USER INFO (✅ new added) ──
+app.get('/get-user-info', async (req, res) => {
   try {
-    await new Booking(req.body).save();
-    res.json({ ok: true, message: 'Booking registered successfully' });
-  } catch {
-    res.status(500).json({ ok: false, message: 'Error in registration' });
+    if (!loggedInUserEmail) {
+      return res.json({ success: false, message: "Not logged in" });
+    }
+    const user = await User.findOne({ email: loggedInUserEmail });
+    if (!user) {
+      return res.json({ success: false, message: "User not found" });
+    }
+    res.json({ success: true, email: user.email, username: user.username });
+  } catch (err) {
+    console.error('Error in /get-user-info:', err);
+    res.status(500).json({ success: false, message: "Server error" });
   }
 });
 
+// ── PAYMENT ──
 app.post('/create-order', async (req, res) => {
   try {
     const { amount } = req.body;
@@ -186,23 +209,72 @@ app.post('/create-order', async (req, res) => {
   }
 });
 
+// ── SUBMIT BOOKING ──
+app.post('/submit-form', async (req, res) => {
+  try {
+    await new Booking(req.body).save();
+    res.json({ ok: true, message: 'Booking registered successfully' });
+  } catch {
+    res.status(500).json({ ok: false, message: 'Error in registration' });
+  }
+});
+
+// ── FETCH USER BOOKINGS ──
 app.post('/bookings', async (req, res) => {
   const { email } = req.body;
-  if (email !== loggedInUserEmail) return res.status(403).json({ message: 'Unauthorized access' });
+  if (email !== loggedInUserEmail) return res.status(403).json({ message: 'Unauthorized' });
+
   const userBookings = await Booking.find({ email });
   res.status(userBookings.length ? 200 : 404).json(userBookings);
 });
 
-app.get('/is-logged-in', (req, res) => res.json({ loggedIn: !!loggedInUserEmail }));
-app.post('/logout', (_req, res) => { loggedInUserEmail = null; res.json({ message: 'Logged out' }); });
+// ── ADMIN ALL BOOKINGS ──
 app.get('/admin/bookings', async (_req, res) => {
   try { res.json(await Booking.find({})); }
   catch { res.status(500).json({ message: 'Failed to retrieve bookings' }); }
 });
 
-// Serve React build
+// ── HOTEL BOOKINGS ──
+app.post('/hotel/:hotelName/book-date', async (req, res) => {
+  const { hotelName } = req.params;
+  const { name, email, selectedDate, event } = req.body;
+
+  if (!name || !email || !selectedDate || !event) {
+    return res.status(400).json({ success: false, message: 'All fields are required' });
+  }
+
+  try {
+    const HotelBooking = getHotelBookingModel(hotelName);
+    const alreadyBooked = await HotelBooking.findOne({ selectedDate: new Date(selectedDate) });
+    if (alreadyBooked) {
+      return res.status(400).json({ success: false, message: 'Date already booked' });
+    }
+    await new HotelBooking({ name, email, selectedDate, event }).save();
+    res.json({ success: true, message: 'Booking successful' });
+  } catch (err) {
+    console.error('Error booking hotel date:', err);
+    res.status(500).json({ success: false, message: 'Booking error' });
+  }
+});
+
+// ── GET BOOKED DATES ──
+app.get('/hotel/:hotelName/booked-dates', async (req, res) => {
+  const { hotelName } = req.params;
+  try {
+    const HotelBooking = getHotelBookingModel(hotelName);
+    const bookings = await HotelBooking.find({});
+    const dates = bookings.map(b => b.selectedDate);
+    res.json(dates);
+  } catch (err) {
+    console.error('Error fetching booked dates:', err);
+    res.status(500).json({ message: 'Failed to fetch booked dates' });
+  }
+});
+
+// ─── SERVE REACT BUILD ─────────────────────────────────────────────────────
 const buildPath = path.join(__dirname, '../frontend/emsys/build');
 app.use(express.static(buildPath));
 app.get('*', (_, res) => res.sendFile(path.join(buildPath, 'index.html')));
 
+// ─── START SERVER ───────────────────────────────────────────────────────────
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
