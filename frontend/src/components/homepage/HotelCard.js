@@ -43,7 +43,10 @@ function HotelCard({ hotel, distance }) {
         <h2 style={{ margin: "0 0 12px", fontSize: "1.5rem", color: "#B76E79" }}>{hotel.name}</h2>
         <p style={{ margin: "6px 0", color: "#555" }}>📍 {hotel.area}</p>
         {distance !== undefined && (
-          <p style={{ margin: "6px 0", color: "#777" }}>🚗 {distance} KM Away</p>
+          <p style={{ margin: "6px 0", color: "#777" }}>
+          🚗 {parseFloat(distance).toFixed(2)} KM Away
+        </p>
+        
         )}
         <p style={{ margin: "8px 0", color: "#777" }}>
           🎉 {hotel.supportedEvents.join(", ")}

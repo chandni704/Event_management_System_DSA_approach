@@ -1,3 +1,4 @@
+// HotelDetail.js
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Carousel } from "react-responsive-carousel";
@@ -38,17 +39,21 @@ function HotelDetail() {
       }
     });
 
-    axios.get(`http://localhost:5000/hotel/${hotelName}/booked-dates`).then((response) => {
-      const booked = response.data.map((dateStr) => new Date(dateStr));
-      setBookedDates(booked);
-      setLoading(false);
-    });
+    axios
+      .get(`http://localhost:5000/hotel/${hotelName}/booked-dates`)
+      .then((response) => {
+        const booked = response.data.map((dateStr) => new Date(dateStr));
+        setBookedDates(booked);
+        setLoading(false);
+      });
   }, [hotelName]);
 
   const handleDateChange = (date) => {
-    const normalized = new Date(date);
-    normalized.setHours(0, 0, 0, 0);
-    setSelectedDate(normalized);
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, "0");
+    const dd = String(date.getDate()).padStart(2, "0");
+    const formattedDate = `${yyyy}-${mm}-${dd}`;
+    setSelectedDate(formattedDate);
   };
 
   const handleBookNow = () => {
@@ -56,8 +61,13 @@ function HotelDetail() {
       alert("Please select a date before booking.");
       return;
     }
+
     navigate(`/book/${hotel.name}`, {
-      state: { selectedDate, fullName: userInfo.fullName, email: userInfo.email },
+      state: {
+        selectedDate,
+        fullName: userInfo.fullName,
+        email: userInfo.email,
+      },
     });
   };
 
@@ -110,7 +120,7 @@ function HotelDetail() {
         <h3 className="subHeading">🗓 Select a Date:</h3>
         <Calendar
           onChange={handleDateChange}
-          value={selectedDate}
+          value={selectedDate ? new Date(selectedDate) : null}
           tileDisabled={tileDisabled}
           minDate={new Date()}
           className="custom-calendar"

@@ -29,28 +29,35 @@ function Dashboard() {
     });
   }, []);
 
+
   const handleSearch = () => {
     if (!location || !graph[location]) {
       alert("Please select a valid location.");
       return;
     }
-
+  
     const distances = dijkstra(graph, location);
-
+  
     let updated = [...hotels];
-
+  
     if (eventFilter) {
       updated = updated.filter(hotel => hotel.supportedEvents.includes(eventFilter));
     }
-
+  
+    // Sort with 0 KM first, then others in ascending order
     updated.sort((a, b) => {
-      const d1 = distances[a.area] || Infinity;
-      const d2 = distances[b.area] || Infinity;
+      const d1 = distances[a.area] ?? Infinity;
+      const d2 = distances[b.area] ?? Infinity;
+  
+      if (d1 === 0 && d2 !== 0) return -1;
+      if (d1 !== 0 && d2 === 0) return 1;
+  
       return d1 - d2;
     });
-
+  
     setFilteredHotels(updated);
   };
+  
 
   return (
     <div
