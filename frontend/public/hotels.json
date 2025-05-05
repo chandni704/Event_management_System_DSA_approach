@@ -3,7 +3,7 @@
       "id": "H001",
       "name": "Native Hotel",
       "area": "Tilakwadi",
-      "supportedEvents": ["Marriage", "Birthday", "Official Meeting"],
+      "supportedEvents": ["Birthday", "Official Meeting"],
       "images": ["native1.jpg"],
       "description": "A popular venue in Tilakwadi for weddings and social events."
     },
@@ -43,7 +43,7 @@
       "id": "H006",
       "name": "Dharmanath Bhavan",
       "area": "Sadashiv Nagar",
-      "supportedEvents": ["Naming Ceremony", "Official Meeting"],
+      "supportedEvents": ["Naming Ceremony", "Official Meeting", "Marriage"],
       "images": ["dharmanath1.jpg"],
       "description": "Traditional indoor venue for small ceremonies and functions."
     },
@@ -59,7 +59,7 @@
       "id": "H008",
       "name": "UK 27",
       "area": "Nehru Nagar",
-      "supportedEvents": ["Marriage", "Official Meeting"],
+      "supportedEvents": ["Birthday", "Official Meeting"],
       "images": ["uk27.jpg"],
       "description": "Upscale hotel with banquet and conference facilities."
     },
