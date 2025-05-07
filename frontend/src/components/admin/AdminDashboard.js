@@ -58,24 +58,25 @@ const Home = () => {
                 <label>Event Type</label>
                 <select name="event" value={filters.event} onChange={handleFilterChange}>
                     <option value="">All</option>
-                    <option value="Wedding">Wedding</option>
+                    <option value="Marriage">Marriage</option>
                     <option value="Birthday">Birthday</option>
                     <option value="Naming Ceremony">Naming Ceremony</option>
-                    <option value="Kitty Party">Kitty Party</option>
                     <option value="Official Meetings">Official Meetings</option>
-                    <option value="Concert">Concert</option>
-                    <option value="Party">Party</option>
                 </select>
 
                 <label>Venue</label>
                 <select name="venue" value={filters.venue} onChange={handleFilterChange}>
                     <option value="">All</option>
-                    <option value="Garden Hall">Garden Hall</option>
-                    <option value="Swimming Pool Pavilion">Swimming Pool Pavilion</option>
-                    <option value="Elegant Ballroom">Elegant Ballroom</option>
-                    <option value="Terrace Lounge">Terrace Lounge</option>
-                    <option value="Majestic Courtyard">Majestic Courtyard</option>
-                    <option value="Sky Lounge">Sky Lounge</option>
+                    <option value="Native Hotel">Native Hotel</option>
+                    <option value="Millenium Garden">Millenium Garden</option>
+                    <option value="Green Garden">Green Garden</option>
+                    <option value="Netravati Lawns">Netravati Lawns</option>
+                    <option value="Sankalp Garden">Sankalp Garden</option>
+                    <option value="Dharmanath Bhavan">Dharmanath Bhavan</option>
+                    <option value="Shivam Function Hall">Shivam Function Hall</option>
+                    <option value="UK 27">UK 27</option>
+                    <option value="Uday Bhavan">Uday Bhavan</option>
+                    <option value="The Palladium Banquet">The Palladium Banquet</option>
                 </select>
 
                 <label>Month</label>

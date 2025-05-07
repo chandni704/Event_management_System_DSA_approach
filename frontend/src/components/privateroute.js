@@ -7,33 +7,29 @@ const PrivateRoute = ({ element: Component }) => {
   const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
-    // Fetch login status from the backend
     axios
-      .get('http://localhost:5000/is-logged-in')
+      .get('http://localhost:5000/is-logged-in', { withCredentials: true }) // ✅ FIXED
       .then((response) => {
         setIsLoggedIn(response.data.loggedIn);
       })
       .catch((error) => {
         console.error('Error checking login status:', error);
-        setIsLoggedIn(false); // Treat errors as not logged in
+        setIsLoggedIn(false);
       });
   }, []);
 
-  // Show a loading spinner while login status is being fetched
   if (isLoggedIn === null) {
     return <div>Loading...</div>;
   }
 
   if (!isLoggedIn) {
-    // Show an alert before redirecting
     if (!showAlert) {
       alert('You are not authorized to view this page. Redirecting to the login page.');
-      setShowAlert(true); // Prevent multiple alerts
+      setShowAlert(true);
     }
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />; // 👈 optional: redirect to /login, not /
   }
 
-  // Render the component if logged in
   return Component;
 };
 

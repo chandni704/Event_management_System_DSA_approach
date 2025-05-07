@@ -18,7 +18,10 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true,
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -175,6 +178,7 @@ app.post('/submit-login', async (req, res) => {
   }
 });
 
+
 // ── LOGOUT ──
 app.post('/logout', (_req, res) => {
   loggedInUserEmail = null;
@@ -268,6 +272,13 @@ app.get('/hotel/:hotelName/booked-dates', async (req, res) => {
   } catch (err) {
     console.error('Error fetching booked dates:', err);
     res.status(500).json({ message: 'Failed to fetch booked dates' });
+  }
+});
+app.get('/is-logged-in', (req, res) => {
+  if (loggedInUserEmail!=null) {
+    res.json({ loggedIn: true, email: loggedInUserEmail });
+  } else {
+    res.json({ loggedIn: false });
   }
 });
 
