@@ -8,6 +8,10 @@ function Dashboard() {
   const [graph, setGraph] = useState({});
   const [location, setLocation] = useState("");
   const [eventFilter, setEventFilter] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [minCapacity, setMinCapacity] = useState("");
+  const [maxCapacity, setMaxCapacity] = useState("");
 
   const locationsList = [
     "Tilakwadi", "Hanuman Nagar", "Bhagya Nagar", "Ramteerth Nagar",
@@ -15,7 +19,7 @@ function Dashboard() {
     "Vaibhav Nagar", "Shree Nagar", "Ganeshpur", "Rani Chennamma Nagar",
     "Sahyadri Nagar", "Azam Nagar", "Auto Nagar", "Shahu Nagar", "Club Road",
     "Gandhi Nagar", "Kangrali", "Sambra", "Kanabargi", "Vinayak Nagar",
-    "Manikbag", "Bk kangrali", "Majagaon", "Macche", "main City"
+    "Manikbag", "Bk kangrali", "Majagaon", "Macche", "main City", "Udyambag"
   ];
 
   useEffect(() => {
@@ -29,35 +33,50 @@ function Dashboard() {
     });
   }, []);
 
-
   const handleSearch = () => {
     if (!location || !graph[location]) {
       alert("Please select a valid location.");
       return;
     }
-  
+
     const distances = dijkstra(graph, location);
-  
+
     let updated = [...hotels];
-  
+
+    // Apply filters conditionally
     if (eventFilter) {
       updated = updated.filter(hotel => hotel.supportedEvents.includes(eventFilter));
     }
-  
-    // Sort with 0 KM first, then others in ascending order
+
+    if (minPrice !== "") {
+      updated = updated.filter(hotel => hotel.price >= parseInt(minPrice));
+    }
+
+    if (maxPrice !== "") {
+      updated = updated.filter(hotel => hotel.price <= parseInt(maxPrice));
+    }
+
+    if (minCapacity !== "") {
+      updated = updated.filter(hotel => hotel.capacity >= parseInt(minCapacity));
+    }
+
+    if (maxCapacity !== "") {
+      updated = updated.filter(hotel => hotel.capacity <= parseInt(maxCapacity));
+    }
+
+    // Sort by proximity
     updated.sort((a, b) => {
       const d1 = distances[a.area] ?? Infinity;
       const d2 = distances[b.area] ?? Infinity;
-  
+
       if (d1 === 0 && d2 !== 0) return -1;
       if (d1 !== 0 && d2 === 0) return 1;
-  
+
       return d1 - d2;
     });
-  
+
     setFilteredHotels(updated);
   };
-  
 
   return (
     <div
@@ -77,9 +96,9 @@ function Dashboard() {
         display: "flex",
         flex: 1,
         gap: "20px",
-        flexDirection: window.innerWidth <= 768 ? "column" : "row", // Responsive layout
+        flexDirection: window.innerWidth <= 768 ? "column" : "row",
       }}>
-        {/* Sidebar */}
+        {/* Sidebar Filters */}
         <div style={{
           backgroundColor: "rgba(255,255,255,0.9)",
           borderRadius: "20px",
@@ -92,23 +111,13 @@ function Dashboard() {
         }}>
           <h2 style={{ textAlign: "center", color: "#B76E79", marginBottom: "20px" }}>🔎 Filters</h2>
 
-          {/* Location */}
+          {/* Location Filter */}
           <div style={{ marginBottom: "20px" }}>
             <label style={{ fontWeight: "bold" }}>Your Location</label>
             <select
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              style={{
-                marginTop: "10px",
-                width: "100%",
-                padding: "10px",
-                borderRadius: "10px",
-                border: "1px solid #ccc",
-                fontSize: "1rem",
-                transition: "0.3s",
-              }}
-              onMouseOver={e => e.target.style.borderColor = "#B76E79"}
-              onMouseOut={e => e.target.style.borderColor = "#ccc"}
+              style={inputStyle}
             >
               <option value="">-- Select Location --</option>
               {locationsList.map(loc => (
@@ -117,23 +126,13 @@ function Dashboard() {
             </select>
           </div>
 
-          {/* Event Type */}
+          {/* Event Filter */}
           <div style={{ marginBottom: "20px" }}>
             <label style={{ fontWeight: "bold" }}>Event Type</label>
             <select
               value={eventFilter}
               onChange={(e) => setEventFilter(e.target.value)}
-              style={{
-                marginTop: "10px",
-                width: "100%",
-                padding: "10px",
-                borderRadius: "10px",
-                border: "1px solid #ccc",
-                fontSize: "1rem",
-                transition: "0.3s",
-              }}
-              onMouseOver={e => e.target.style.borderColor = "#B76E79"}
-              onMouseOut={e => e.target.style.borderColor = "#ccc"}
+              style={inputStyle}
             >
               <option value="">-- Select Event --</option>
               <option value="Marriage">Marriage</option>
@@ -143,22 +142,28 @@ function Dashboard() {
             </select>
           </div>
 
+          {/* Price Filter */}
+          <div style={{ marginBottom: "20px" }}>
+            <label style={{ fontWeight: "bold" }}>Price (₹)</label>
+            <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+              <input type="number" placeholder="Min" value={minPrice} onChange={e => setMinPrice(e.target.value)} style={{ ...inputStyle, width: "50%" }} />
+              <input type="number" placeholder="Max" value={maxPrice} onChange={e => setMaxPrice(e.target.value)} style={{ ...inputStyle, width: "50%" }} />
+            </div>
+          </div>
+
+          {/* Capacity Filter */}
+          <div style={{ marginBottom: "20px" }}>
+            <label style={{ fontWeight: "bold" }}>Capacity</label>
+            <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+              <input type="number" placeholder="Min" value={minCapacity} onChange={e => setMinCapacity(e.target.value)} style={{ ...inputStyle, width: "50%" }} />
+              <input type="number" placeholder="Max" value={maxCapacity} onChange={e => setMaxCapacity(e.target.value)} style={{ ...inputStyle, width: "50%" }} />
+            </div>
+          </div>
+
           {/* Search Button */}
           <button
             onClick={handleSearch}
-            style={{
-              marginTop: "10px",
-              width: "100%",
-              padding: "12px",
-              borderRadius: "12px",
-              backgroundColor: "#B76E79",
-              color: "white",
-              border: "none",
-              fontSize: "1rem",
-              fontWeight: "bold",
-              cursor: "pointer",
-              transition: "0.3s",
-            }}
+            style={searchButtonStyle}
             onMouseOver={e => e.target.style.backgroundColor = "#a05562"}
             onMouseOut={e => e.target.style.backgroundColor = "#B76E79"}
           >
@@ -166,7 +171,7 @@ function Dashboard() {
           </button>
         </div>
 
-        {/* Content */}
+        {/* Hotel List */}
         <div style={{
           flex: 1,
           backgroundColor: "rgba(255,255,255,0.85)",
@@ -185,7 +190,6 @@ function Dashboard() {
             📍 Event Venue Finder
           </h1>
 
-          {/* Hotels Grid */}
           <div style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
@@ -203,7 +207,7 @@ function Dashboard() {
         </div>
       </div>
 
-      {/* CSS Animations */}
+      {/* Animations */}
       <style>
         {`
           @keyframes fadeIn {
@@ -215,5 +219,29 @@ function Dashboard() {
     </div>
   );
 }
+
+// Reusable styles
+const inputStyle = {
+  width: "100%",
+  padding: "10px",
+  borderRadius: "10px",
+  border: "1px solid #ccc",
+  fontSize: "1rem",
+  transition: "0.3s",
+};
+
+const searchButtonStyle = {
+  marginTop: "10px",
+  width: "100%",
+  padding: "12px",
+  borderRadius: "12px",
+  backgroundColor: "#B76E79",
+  color: "white",
+  border: "none",
+  fontSize: "1rem",
+  fontWeight: "bold",
+  cursor: "pointer",
+  transition: "0.3s",
+};
 
 export default Dashboard;
