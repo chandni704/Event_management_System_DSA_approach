@@ -35,7 +35,9 @@
       "area": "Hanuman Nagar",
       "supportedEvents": ["Marriage", "Official Meeting"],
       "images": ["netravati1.jpg"],
-      "description": "Large lawn ideal for weddings and business gatherings."
+      "description": "Large lawn ideal for weddings and business gatherings.",
+      "capacity": "500",
+      "price": "25000"
 
     },
     {
