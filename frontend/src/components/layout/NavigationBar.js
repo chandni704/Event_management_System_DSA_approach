@@ -22,7 +22,7 @@ const NavigationBar = () => {
                 <button onClick={() => navigate('/profile')} className="btn-profile">
                     <i className="fas fa-user-circle"></i> Profile
                 </button>
-                <button onClick={logout} className="btn-logout">
+                <button onClick={() => navigate('/')} className="btn-logout">
                     <i className="fas fa-sign-out-alt"></i> Logout
                 </button>
             </div>

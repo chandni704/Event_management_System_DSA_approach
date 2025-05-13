@@ -142,8 +142,8 @@
         "Shree Nagar": 5.0
     },
     "Majagaon": {
-        "Tilakwadi": 4.4,
-        "Angol": 2.5,
+        
+        
         "Macche": 4.8
     },
     "Macche": {
@@ -155,5 +155,10 @@
         "Shree Nagar": 4.0,
         "Khasbag": 3.6,
         "Mahantesh Nagar": 3.3
+    },
+    "Udyambag": {
+        "Angol": 2.5,
+        "Tilakwadi": 4.4,
+        "Majagaon": 4.8
     }
 }
