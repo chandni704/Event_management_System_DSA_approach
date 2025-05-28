@@ -42,15 +42,25 @@ function HotelCard({ hotel, distance }) {
       <div style={{ padding: "20px", flex: 1 }}>
         <h2 style={{ margin: "0 0 12px", fontSize: "1.5rem", color: "#B76E79" }}>{hotel.name}</h2>
         <p style={{ margin: "6px 0", color: "#555" }}>📍 {hotel.area}</p>
+
         {distance !== undefined && (
           <p style={{ margin: "6px 0", color: "#777" }}>
-          🚗 {parseFloat(distance).toFixed(2)} KM Away
-        </p>
-        
+            🚗 {parseFloat(distance).toFixed(2)} KM Away
+          </p>
         )}
+
         <p style={{ margin: "8px 0", color: "#777" }}>
           🎉 {hotel.supportedEvents.join(", ")}
         </p>
+
+        <p style={{ margin: "6px 0", color: "#777" }}>
+          👥 Capacity: <strong>{hotel.capacity}</strong> guests
+        </p>
+
+        <p style={{ margin: "6px 0", color: "#777" }}>
+          💰 Price: ₹<strong>{hotel.price}</strong>
+        </p>
+
         <button
           style={{
             marginTop: "15px",
@@ -69,8 +79,12 @@ function HotelCard({ hotel, distance }) {
             e.stopPropagation();
             navigate(`/hotels/${hotelFolder}`);
           }}
-          onMouseEnter={(e) => (e.target.style.background = "linear-gradient(90deg, #FFB6B9, #B76E79)")}
-          onMouseLeave={(e) => (e.target.style.background = "linear-gradient(90deg, #B76E79, #FFB6B9)")}
+          onMouseEnter={(e) =>
+            (e.target.style.background = "linear-gradient(90deg, #FFB6B9, #B76E79)")
+          }
+          onMouseLeave={(e) =>
+            (e.target.style.background = "linear-gradient(90deg, #B76E79, #FFB6B9)")
+          }
         >
           View Details
         </button>

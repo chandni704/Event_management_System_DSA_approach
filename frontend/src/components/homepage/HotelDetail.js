@@ -90,31 +90,45 @@ function HotelDetail() {
 
   return (
     <div className="pageWrapper">
-      <Carousel
-        showThumbs={false}
-        infiniteLoop
-        autoPlay
-        interval={3000}
-        showStatus={false}
-        dynamicHeight={false}
-        emulateTouch
-      >
-        {[1, 2, 3, 4].map((num) => (
-          <div key={num}>
-            <img
-              src={`/venues/${hotel.name}/photos/N${num}.jpg`}
-              alt={`Venue ${num}`}
-              className="carouselImage"
-            />
-          </div>
-        ))}
-      </Carousel>
+      <div className="hotelContentWrapper">
+        <Carousel
+          showThumbs={false}
+          infiniteLoop
+          autoPlay
+          interval={3000}
+          showStatus={false}
+          dynamicHeight={false}
+          emulateTouch
+          className="carousel"
+        >
+          {[1, 2, 3, 4].map((num) => (
+            <div key={num}>
+              <img
+                src={`/venues/${hotel.name}/photos/N${num}.jpg`}
+                alt={`Venue ${num}`}
+                className="carouselImage"
+              />
+            </div>
+          ))}
+        </Carousel>
 
-      <div className="mainCard animate__animated animate__fadeInUp">
-        <h1 className="hotelName">{hotel.name}</h1>
-        <p className="detail"><strong>📍 Area:</strong> {hotel.area}</p>
-        <p className="detail"><strong>🎉 Events Supported:</strong> {hotel.supportedEvents.join(", ")}</p>
+        <div className="rightPanel">
+          <div className="mainCard animate__animated animate__fadeInUp">
+            <h1 className="hotelName">{hotel.name}</h1>
+            <p className="detail"><strong>📍 Area:</strong> {hotel.area}</p>
+            <p className="detail"><strong>🎉 Events Supported:</strong> {hotel.supportedEvents.join(", ")}</p>
+          </div>
+
+          <div className="hotelInfoCard animate__animated animate__fadeInUp">
+            <p><strong>📍 {hotel.area}</strong></p>
+            <p><strong>🎉</strong> {hotel.supportedEvents.join(", ")}</p>
+            <p><strong>👥 Capacity:</strong> {hotel.capacity} guests</p>
+            <p><strong>💰 Price:</strong> ₹{hotel.price}</p>
+          </div>
+        </div>
       </div>
+
+      
 
       <div className="calendarWrapper animate__animated animate__zoomIn">
         <h3 className="subHeading">🗓 Select a Date:</h3>
@@ -127,7 +141,7 @@ function HotelDetail() {
         />
       </div>
 
-      <div className="bookNowWrapper">
+      <div className="bookNowWrapper centeredButton">
         <button onClick={handleBookNow} className="bookButton">
           Book Now
         </button>
@@ -137,6 +151,8 @@ function HotelDetail() {
         <h3 className="subHeading">📝 Description</h3>
         <p className="description">{description}</p>
       </div>
+
+      
     </div>
   );
 }

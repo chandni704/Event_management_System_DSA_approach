@@ -1,30 +1,48 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './NavigationBar.css'; // We'll create this
+import './NavigationBar.css';
 
 const NavigationBar = () => {
     const navigate = useNavigate();
+    const [menuOpen, setMenuOpen] = useState(false);
+    const menuRef = useRef();
 
     const logout = () => {
         localStorage.clear();
         navigate('/login');
     };
 
+    // Close menu if clicked outside
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (menuRef.current && !menuRef.current.contains(e.target)) {
+                setMenuOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
     return (
         <div className="navigation-bar">
             <div className="icon" onClick={() => navigate('/')}>
                 <img src="/assets/icon.png" alt="Logo" />
             </div>
-            <div className="nav-buttons">
-                <button onClick={() => navigate('/mybookings')} className="btn-mybookings">
-                    My Bookings
-                </button>
-                <button onClick={() => navigate('/profile')} className="btn-profile">
-                    <i className="fas fa-user-circle"></i> Profile
-                </button>
-                <button onClick={() => navigate('/')} className="btn-logout">
-                    <i className="fas fa-sign-out-alt"></i> Logout
-                </button>
+
+            <div className="profile-section" ref={menuRef}>
+                <img
+                    src="/assets/profile.png" // You can use a user avatar here
+                    alt="Profile"
+                    className="profile-avatar"
+                    onClick={() => setMenuOpen(!menuOpen)}
+                />
+                {menuOpen && (
+                    <div className="dropdown-menu">
+                        <button onClick={() => navigate('/mybookings')}>My Bookings</button>
+                        
+                        <button onClick={() => navigate('/')}>Logout</button>
+                    </div>
+                )}
             </div>
         </div>
     );

@@ -19,7 +19,7 @@ function Dashboard() {
     "Vaibhav Nagar", "Shree Nagar", "Ganeshpur", "Rani Chennamma Nagar",
     "Sahyadri Nagar", "Azam Nagar", "Auto Nagar", "Shahu Nagar", "Club Road",
     "Gandhi Nagar", "Kangrali", "Sambra", "Kanabargi", "Vinayak Nagar",
-    "Manikbag", "Bk kangrali", "Majagaon", "Macche", "main City", "Udyambag"
+    "Manikbag", "Bk kangrali", "Majagaon", "Macche", "Main City", "Udyambag"
   ];
 
   useEffect(() => {

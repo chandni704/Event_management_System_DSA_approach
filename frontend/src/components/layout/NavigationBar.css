@@ -1,45 +1,61 @@
 .navigation-bar {
-    background-color: #1c1c1c;
-    padding: 10px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: white;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 10px 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  position: relative;
+  z-index: 100;
 }
 
 .icon img {
-    height: 40px;
-    cursor: pointer;
+  height: 40px;
+  cursor: pointer;
 }
 
-.nav-buttons button {
-    margin-left: 10px;
-    padding: 8px 14px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
+.profile-section {
+  position: relative;
 }
 
-.btn-mybookings {
-    background-color: #007bff;
-    color: white;
+.profile-avatar {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  object-fit: cover;
+  border: 2px solid #ddd;
+  transition: border 0.3s ease;
 }
 
-.btn-profile {
-    background-color: #17a2b8;
-    color: white;
+.profile-avatar:hover {
+  border: 2px solid #B76E79;
 }
 
-.btn-logout {
-    background-color: #dc3545;
-    color: white;
+.dropdown-menu {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-width: 160px;
 }
 
-.nav-buttons button i {
-    margin-right: 6px;
+.dropdown-menu button {
+  background: none;
+  border: none;
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 1rem;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.dropdown-menu button:hover {
+  background-color: #f0f0f0;
 }
