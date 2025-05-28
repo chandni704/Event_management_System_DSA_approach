@@ -12,6 +12,7 @@ function Dashboard() {
   const [maxPrice, setMaxPrice] = useState("");
   const [minCapacity, setMinCapacity] = useState("");
   const [maxCapacity, setMaxCapacity] = useState("");
+  const [chatVisible, setChatVisible] = useState(false);
 
   const locationsList = [
     "Tilakwadi", "Hanuman Nagar", "Bhagya Nagar", "Ramteerth Nagar",
@@ -43,7 +44,6 @@ function Dashboard() {
 
     let updated = [...hotels];
 
-    // Apply filters conditionally
     if (eventFilter) {
       updated = updated.filter(hotel => hotel.supportedEvents.includes(eventFilter));
     }
@@ -64,14 +64,11 @@ function Dashboard() {
       updated = updated.filter(hotel => hotel.capacity <= parseInt(maxCapacity));
     }
 
-    // Sort by proximity
     updated.sort((a, b) => {
       const d1 = distances[a.area] ?? Infinity;
       const d2 = distances[b.area] ?? Infinity;
-
       if (d1 === 0 && d2 !== 0) return -1;
       if (d1 !== 0 && d2 === 0) return 1;
-
       return d1 - d2;
     });
 
@@ -81,7 +78,7 @@ function Dashboard() {
   return (
     <div
       style={{
-        backgroundImage: `url('/events_back.jpg')`,
+        backgroundImage: "url('/events_back.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         minHeight: "100vh",
@@ -111,7 +108,6 @@ function Dashboard() {
         }}>
           <h2 style={{ textAlign: "center", color: "#B76E79", marginBottom: "20px" }}>🔎 Filters</h2>
 
-          {/* Location Filter */}
           <div style={{ marginBottom: "20px" }}>
             <label style={{ fontWeight: "bold" }}>Your Location</label>
             <select
@@ -126,7 +122,6 @@ function Dashboard() {
             </select>
           </div>
 
-          {/* Event Filter */}
           <div style={{ marginBottom: "20px" }}>
             <label style={{ fontWeight: "bold" }}>Event Type</label>
             <select
@@ -142,7 +137,6 @@ function Dashboard() {
             </select>
           </div>
 
-          {/* Price Filter */}
           <div style={{ marginBottom: "20px" }}>
             <label style={{ fontWeight: "bold" }}>Price (₹)</label>
             <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
@@ -151,7 +145,6 @@ function Dashboard() {
             </div>
           </div>
 
-          {/* Capacity Filter */}
           <div style={{ marginBottom: "20px" }}>
             <label style={{ fontWeight: "bold" }}>Capacity</label>
             <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
@@ -160,7 +153,6 @@ function Dashboard() {
             </div>
           </div>
 
-          {/* Search Button */}
           <button
             onClick={handleSearch}
             style={searchButtonStyle}
@@ -207,6 +199,58 @@ function Dashboard() {
         </div>
       </div>
 
+      {/* Chatbot Toggle Button */}
+      <button
+        onClick={() => setChatVisible(!chatVisible)}
+        style={{
+          position: "fixed",
+          bottom: "30px",
+          right: "30px",
+          backgroundColor: "white",
+          color: "white",
+          border: "none",
+          borderRadius: "50%",
+          width: "60px",
+          height: "60px",
+          cursor: "pointer",
+          zIndex: 1001,
+          boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <img src="/customer-service.png" alt="Chat" style={{ width: "28px", height: "28px" }} />
+      </button>
+
+
+      {/* Chatbot iframe with slide animation */}
+      <div
+        style={{
+          position: "fixed",
+          bottom: "100px",
+          right: chatVisible ? "30px" : "-420px",
+          transition: "right 0.4s ease",
+          width: "380px",
+          height: "520px",
+          borderRadius: "20px",
+          overflow: "hidden",
+          boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
+          zIndex: 1000,
+          backgroundColor: "#fff",
+        }}
+      >
+        <iframe
+          src="https://www.chatbase.co/chatbot-iframe/BCvxhhDDzW1eAmAcmJNbD"
+          title="Chatbot"
+          width="100%"
+          height="100%"
+          style={{
+            border: "none",
+          }}
+        ></iframe>
+      </div>
+
       {/* Animations */}
       <style>
         {`
@@ -216,11 +260,10 @@ function Dashboard() {
           }
         `}
       </style>
-    </div>
+    </div >
   );
 }
 
-// Reusable styles
 const inputStyle = {
   width: "100%",
   padding: "10px",

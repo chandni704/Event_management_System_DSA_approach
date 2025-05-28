@@ -16,6 +16,7 @@ function HotelDetail() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [userInfo, setUserInfo] = useState({ fullName: "", email: "" });
   const [loading, setLoading] = useState(true);
+  const [chatVisible, setChatVisible] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -89,71 +90,120 @@ function HotelDetail() {
   if (!hotel) return <div className="loading">Hotel not found</div>;
 
   return (
-    <div className="pageWrapper">
-      <div className="hotelContentWrapper">
-        <Carousel
-          showThumbs={false}
-          infiniteLoop
-          autoPlay
-          interval={3000}
-          showStatus={false}
-          dynamicHeight={false}
-          emulateTouch
-          className="carousel"
-        >
-          {[1, 2, 3, 4].map((num) => (
-            <div key={num}>
-              <img
-                src={`/venues/${hotel.name}/photos/N${num}.jpg`}
-                alt={`Venue ${num}`}
-                className="carouselImage"
-              />
+    <>
+      <div className="pageWrapper">
+        <div className="hotelContentWrapper">
+          <Carousel
+            showThumbs={false}
+            infiniteLoop
+            autoPlay
+            interval={3000}
+            showStatus={false}
+            dynamicHeight={false}
+            emulateTouch
+            className="carousel"
+          >
+            {[1, 2, 3, 4].map((num) => (
+              <div key={num}>
+                <img
+                  src={`/venues/${hotel.name}/photos/N${num}.jpg`}
+                  alt={`Venue ${num}`}
+                  className="carouselImage"
+                />
+              </div>
+            ))}
+          </Carousel>
+
+          <div className="rightPanel">
+            <div className="mainCard animate__animated animate__fadeInUp">
+              <h1 className="hotelName">{hotel.name}</h1>
+              <p className="detail"><strong>📍 Area:</strong> {hotel.area}</p>
+              <p className="detail"><strong>🎉 Events Supported:</strong> {hotel.supportedEvents.join(", ")}</p>
             </div>
-          ))}
-        </Carousel>
 
-        <div className="rightPanel">
-          <div className="mainCard animate__animated animate__fadeInUp">
-            <h1 className="hotelName">{hotel.name}</h1>
-            <p className="detail"><strong>📍 Area:</strong> {hotel.area}</p>
-            <p className="detail"><strong>🎉 Events Supported:</strong> {hotel.supportedEvents.join(", ")}</p>
+            <div className="hotelInfoCard animate__animated animate__fadeInUp">
+              <p><strong>📍 {hotel.area}</strong></p>
+              <p><strong>🎉</strong> {hotel.supportedEvents.join(", ")}</p>
+              <p><strong>👥 Capacity:</strong> {hotel.capacity} guests</p>
+              <p><strong>💰 Price:</strong> ₹{hotel.price}</p>
+            </div>
           </div>
+        </div>
 
-          <div className="hotelInfoCard animate__animated animate__fadeInUp">
-            <p><strong>📍 {hotel.area}</strong></p>
-            <p><strong>🎉</strong> {hotel.supportedEvents.join(", ")}</p>
-            <p><strong>👥 Capacity:</strong> {hotel.capacity} guests</p>
-            <p><strong>💰 Price:</strong> ₹{hotel.price}</p>
-          </div>
+        <div className="calendarWrapper animate__animated animate__zoomIn">
+          <h3 className="subHeading">🗓 Select a Date:</h3>
+          <Calendar
+            onChange={handleDateChange}
+            value={selectedDate ? new Date(selectedDate) : null}
+            tileDisabled={tileDisabled}
+            minDate={new Date()}
+            className="custom-calendar"
+          />
+        </div>
+
+        <div className="bookNowWrapper centeredButton">
+          <button onClick={handleBookNow} className="bookButton">
+            Book Now
+          </button>
+        </div>
+
+        <div className="descriptionBox animate__animated animate__fadeIn">
+          <h3 className="subHeading">📝 Description</h3>
+          <p className="description">{description}</p>
         </div>
       </div>
 
-      
+      {/* Chatbot Toggle Button */}
+      <button
+        onClick={() => setChatVisible(!chatVisible)}
+        style={{
+          position: "fixed",
+          bottom: "30px",
+          right: "30px",
+          backgroundColor: "white",
+          color: "white",
+          border: "none",
+          borderRadius: "50%",
+          width: "60px",
+          height: "60px",
+          cursor: "pointer",
+          zIndex: 1001,
+          boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <img src="/customer-service.png" alt="Chat" style={{ width: "28px", height: "28px" }} />
+      </button>
 
-      <div className="calendarWrapper animate__animated animate__zoomIn">
-        <h3 className="subHeading">🗓 Select a Date:</h3>
-        <Calendar
-          onChange={handleDateChange}
-          value={selectedDate ? new Date(selectedDate) : null}
-          tileDisabled={tileDisabled}
-          minDate={new Date()}
-          className="custom-calendar"
-        />
+      {/* Chatbot iframe with slide animation */}
+      <div
+        style={{
+          position: "fixed",
+          bottom: "100px",
+          right: chatVisible ? "30px" : "-420px",
+          transition: "right 0.4s ease",
+          width: "380px",
+          height: "520px",
+          borderRadius: "20px",
+          overflow: "hidden",
+          boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
+          zIndex: 1000,
+          backgroundColor: "#fff",
+        }}
+      >
+        <iframe
+          src="https://www.chatbase.co/chatbot-iframe/BCvxhhDDzW1eAmAcmJNbD"
+          title="Chatbot"
+          width="100%"
+          height="100%"
+          style={{
+            border: "none",
+          }}
+        ></iframe>
       </div>
-
-      <div className="bookNowWrapper centeredButton">
-        <button onClick={handleBookNow} className="bookButton">
-          Book Now
-        </button>
-      </div>
-
-      <div className="descriptionBox animate__animated animate__fadeIn">
-        <h3 className="subHeading">📝 Description</h3>
-        <p className="description">{description}</p>
-      </div>
-
-      
-    </div>
+    </>
   );
 }
 
