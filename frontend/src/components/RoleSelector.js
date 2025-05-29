@@ -14,7 +14,15 @@ const RoleSelector = () => {
 
     return (
         <>
-            <div className="event-role-container">
+            <div
+                className="event-role-container"
+                style={{
+                    backgroundImage: "url('/events_back.jpg')",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                }}
+            >
                 {/* Decorative Bokeh lights */}
                 <div className="bokeh b1"></div>
                 <div className="bokeh b2"></div>
@@ -46,7 +54,6 @@ const RoleSelector = () => {
                 .event-role-container {
                     width: 100vw;
                     height: 100vh;
-                    background: linear-gradient(120deg, #1c1e3a, #18112b);
                     display: flex;
                     align-items: center;
                     justify-content: center;

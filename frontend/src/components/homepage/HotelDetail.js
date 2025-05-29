@@ -103,7 +103,7 @@ function HotelDetail() {
             emulateTouch
             className="carousel"
           >
-            {[1, 2, 3, 4].map((num) => (
+            {[1, 2, 3].map((num) => (
               <div key={num}>
                 <img
                   src={`/venues/${hotel.name}/photos/N${num}.jpg`}
@@ -119,26 +119,25 @@ function HotelDetail() {
               <h1 className="hotelName">{hotel.name}</h1>
               <p className="detail"><strong>📍 Area:</strong> {hotel.area}</p>
               <p className="detail"><strong>🎉 Events Supported:</strong> {hotel.supportedEvents.join(", ")}</p>
+              <p className="detail"><strong>👥 Capacity:</strong> {hotel.capacity} guests</p>
+              <p className="detail"><strong>💰 Price:</strong> ₹{hotel.price}</p>
             </div>
 
-            <div className="hotelInfoCard animate__animated animate__fadeInUp">
-              <p><strong>📍 {hotel.area}</strong></p>
-              <p><strong>🎉</strong> {hotel.supportedEvents.join(", ")}</p>
-              <p><strong>👥 Capacity:</strong> {hotel.capacity} guests</p>
-              <p><strong>💰 Price:</strong> ₹{hotel.price}</p>
-            </div>
+            
           </div>
         </div>
 
         <div className="calendarWrapper animate__animated animate__zoomIn">
           <h3 className="subHeading">🗓 Select a Date:</h3>
-          <Calendar
-            onChange={handleDateChange}
-            value={selectedDate ? new Date(selectedDate) : null}
-            tileDisabled={tileDisabled}
-            minDate={new Date()}
-            className="custom-calendar"
-          />
+          <div className="custom-calendar">
+            <Calendar
+              onChange={handleDateChange}
+              value={selectedDate ? new Date(selectedDate) : null}
+              tileDisabled={tileDisabled}
+              minDate={new Date()}
+              className="react-calendar"
+            />
+          </div>
         </div>
 
         <div className="bookNowWrapper centeredButton">
@@ -149,7 +148,11 @@ function HotelDetail() {
 
         <div className="descriptionBox animate__animated animate__fadeIn">
           <h3 className="subHeading">📝 Description</h3>
-          <p className="description">{description}</p>
+          <ul className="descriptionList">
+            {description.split('\n').map((line, index) =>
+              line.trim() ? <li key={index}>{line.trim()}</li> : null
+            )}
+          </ul>
         </div>
       </div>
 

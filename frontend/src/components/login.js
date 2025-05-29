@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, useLocation } from 'react-router-dom'; // ⬅️ added useLocation
+import { useNavigate, useLocation } from 'react-router-dom';
 import './clear.css';
 
 const Login = () => {
@@ -20,7 +20,7 @@ const Login = () => {
       const response = await fetch("http://localhost:5000/submit-login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, role }), // ⬅️ include role in request if needed
+        body: JSON.stringify({ email, password, role }),
       });
 
       const result = await response.json();
@@ -38,152 +38,152 @@ const Login = () => {
     }
   };
 
-  return (
+ return (
+  <div
+    style={{
+      backgroundImage: "url('/events_back.jpg')",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "100vh",
+      fontFamily: "'Poppins', sans-serif",
+      color: "#fff",
+      overflow: "hidden",
+    }}
+  >
     <div
       style={{
-        background: "#0b0d19",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        fontFamily: "'Poppins', sans-serif",
-        color: "#fff",
-        overflow: "hidden",
+        backdropFilter: "blur(25px)",
+        background: "rgba(255, 255, 255, 0.08)",
+        border: "1px solid rgba(255, 255, 255, 0.12)",
+        padding: "40px",
+        borderRadius: "20px",
+        boxShadow: "0 20px 40px rgba(0, 0, 0, 0.6)",
+        width: "350px",
+        zIndex: 2,
       }}
     >
-      <div
+      <h1
         style={{
-          background: "#0b0d19",
-          padding: "40px",
-          borderRadius: "15px",
-          boxShadow:
-            "8px 8px 15px rgba(0, 0, 0, 0.2), -8px -8px 15px rgba(255, 255, 255, 0.1)",
-          width: "350px",
-          position: "relative",
+          textAlign: "center",
+          fontSize: "2rem",
+          marginBottom: "10px",
+          color: "#f8c46a",
+          textShadow: "0 0 10px #f8c46a66",
         }}
       >
-        <h1
+        Login
+      </h1>
+
+      <h2
+        style={{
+          textAlign: "center",
+          color: "#f8c46a",
+          marginBottom: "20px",
+          fontWeight: "500",
+        }}
+      >
+        Logging in as:{" "}
+        <span style={{ textTransform: "uppercase", fontWeight: "bold" }}>
+          {role}
+        </span>
+      </h2>
+
+      <form onSubmit={handleLogin}>
+        <input
+  type="text"
+  id="email"
+  name="email"
+  placeholder="Email"
+  required
+  style={{
+    width: "100%",
+    padding: "15px",
+    margin: "10px 0",
+    borderRadius: "10px",
+    border: "none",
+    background: "rgba(255, 255, 255, 0.1)",
+    color: "#000000", // changed color
+    fontSize: "16px",
+  }}
+/>
+<input
+  type="password"
+  id="password"
+  name="password"
+  placeholder="Password"
+  required
+  style={{
+    width: "100%",
+    padding: "15px",
+    margin: "10px 0",
+    borderRadius: "10px",
+    border: "none",
+    background: "rgba(255, 255, 255, 0.1)",
+    color: "#000000", // changed color
+    fontSize: "16px",
+  }}
+/>
+
+        <button
+          type="submit"
           style={{
-            fontSize: "2.5em",
-            marginBottom: "10px",
-            color: "#8ac7ff",
-            textAlign: "center",
-            textTransform: "uppercase",
-            letterSpacing: "1px",
+            width: "100%",
+            padding: "15px",
+            marginTop: "15px",
+            background: "linear-gradient(to right, #67e8f9, #3b82f6)",
+            color: "white",
+            fontSize: "18px",
+            borderRadius: "10px",
+            border: "none",
+            cursor: "pointer",
           }}
         >
           Login
-        </h1>
-        <h2
+        </button>
+      </form>
+
+      {error && (
+        <div
+          id="error"
           style={{
-            textAlign: "center",
-            color: "#8ac7ff",
-            marginBottom: "20px",
-            fontWeight: "500",
-          }}
-        >
-          Logging in as:{" "}
-          <span style={{ textTransform: "uppercase", fontWeight: "bold" }}>
-            {role}
-          </span>
-        </h2>
-
-        <form onSubmit={handleLogin}>
-          <label htmlFor="email" style={{ fontWeight: "bold", color: "#8ac7ff" }}>
-            Email
-          </label>
-          <input
-            type="text"
-            id="email"
-            name="email"
-            placeholder="email@example.com"
-            required
-            style={{
-              width: "100%",
-              padding: "15px",
-              margin: "15px 0",
-              borderRadius: "10px",
-              border: "none",
-              background: "rgba(255, 255, 255, 0.1)",
-              color: "#fff",
-              fontSize: "16px",
-            }}
-          />
-          <label htmlFor="password" style={{ fontWeight: "bold", color: "#8ac7ff" }}>
-            Password
-          </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Enter password"
-            required
-            style={{
-              width: "100%",
-              padding: "15px",
-              margin: "15px 0",
-              borderRadius: "10px",
-              border: "none",
-              background: "rgba(255, 255, 255, 0.1)",
-              color: "#fff",
-              fontSize: "16px",
-            }}
-          />
-          <button
-            type="submit"
-            style={{
-              width: "100%",
-              padding: "15px",
-              backgroundColor: "rgba(58, 123, 213, 0.8)",
-              color: "white",
-              fontSize: "18px",
-              borderRadius: "10px",
-              border: "none",
-              cursor: "pointer",
-            }}
-          >
-            Login
-          </button>
-        </form>
-
-        {error && (
-          <div
-            id="error"
-            style={{
-              marginTop: "10px",
-              color: "#ff7373",
-              fontSize: "14px",
-              textAlign: "center",
-            }}
-          >
-            {error}
-          </div>
-        )}
-
-        <p
-          style={{
-            marginTop: "15px",
+            marginTop: "10px",
+            color: "#ff7373",
             fontSize: "14px",
-            color: "#aaa",
             textAlign: "center",
           }}
         >
-          Don't have an account?{" "}
-          <a
-            href="/signup"
-            style={{
-              color: "#8ac7ff",
-              textDecoration: "none",
-              fontWeight: "bold",
-            }}
-          >
-            Sign up here
-          </a>
-          .
-        </p>
-      </div>
+          {error}
+        </div>
+      )}
+
+      <p
+        style={{
+          marginTop: "20px",
+          fontSize: "14px",
+          color: "#fff",
+          textAlign: "center",
+        }}
+      >
+        Don't have an account?{" "}
+        <a
+          href="/signup"
+          style={{
+            color: "#60a5fa",
+            textDecoration: "none",
+            fontWeight: "bold",
+          }}
+        >
+          Sign up here
+        </a>
+      </p>
     </div>
-  );
+  </div>
+);
+
 };
 
 export default Login;

@@ -146,12 +146,25 @@
 .calendarWrapper {
     background: rgba(214, 161, 26, 0.12);
     backdrop-filter: blur(10px);
-    padding: 30px;
+    padding: 40px;
     border-radius: 20px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
     text-align: center;
     color: rgb(157, 204, 230);
+    margin: 60px auto;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
+
+.custom-calendar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 
 .custom-calendar {
     display: flex;
@@ -242,6 +255,18 @@
     font-size: 18px;
     line-height: 1.7;
 }
+
+.descriptionList {
+  padding-left: 20px;
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.descriptionList li {
+  margin-bottom: 10px;
+  list-style-type: disc;
+}
+
 
 /* Loading Spinner */
 .loading {
