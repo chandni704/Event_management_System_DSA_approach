@@ -65,7 +65,7 @@ function HotelCard({ hotel, distance }) {
           style={{
             marginTop: "15px",
             padding: "10px 20px",
-            background: "linear-gradient(90deg, #B76E79, #FFB6B9)",
+            background: "#00cec9",
             border: "none",
             borderRadius: "30px",
             color: "white",
@@ -80,10 +80,10 @@ function HotelCard({ hotel, distance }) {
             navigate(`/hotels/${hotelFolder}`);
           }}
           onMouseEnter={(e) =>
-            (e.target.style.background = "linear-gradient(90deg, #FFB6B9, #B76E79)")
+            (e.target.style.background = "#00cec9")
           }
           onMouseLeave={(e) =>
-            (e.target.style.background = "linear-gradient(90deg, #B76E79, #FFB6B9)")
+            (e.target.style.background = "#00cec9")
           }
         >
           View Details

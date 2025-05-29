@@ -278,7 +278,7 @@ const searchButtonStyle = {
   width: "100%",
   padding: "12px",
   borderRadius: "12px",
-  backgroundColor: "#B76E79",
+  backgroundColor: "#00cec9",
   color: "white",
   border: "none",
   fontSize: "1rem",
