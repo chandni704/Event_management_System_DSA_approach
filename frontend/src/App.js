@@ -12,6 +12,7 @@ import Admin_dashboard from "./components/admin/AdminDashboard.js";
 import HotelDetail from "./components/homepage/HotelDetail.js";
 import MainLayout from './components/layout/MainLayout.js';
 import NavigationBar from './components/layout/NavigationBar.js';
+import Profile from './components/profile/Profile.js';
 
 
 function App() {
@@ -29,7 +30,7 @@ function App() {
         {/* Routes WITH layout */}
         <Route element={<MainLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
-          
+
 
           {/* Private Routes */}
           <Route path="/booking" element={<PrivateRoute element={<EventBookingForm />} />} />
@@ -37,6 +38,7 @@ function App() {
           <Route path="/hotels/:hotelName" element={<HotelDetail />} />
           <Route path="/book/:hotelName" element={<EventBookingForm />} />
           <Route path="/navigation" element={<PrivateRoute element={<NavigationBar />} />} />
+          <Route path="/profile" element={<PrivateRoute element={<Profile />} />} />
         </Route>
 
       </Routes>

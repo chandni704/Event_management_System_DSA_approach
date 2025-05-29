@@ -1,0 +1,124 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: url('./Hetel_details.jpg') no-repeat center center fixed;
+    min-height: 100vh;
+}
+
+.profile-container {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.profile-card {
+    background: linear-gradient(30deg, rgb(113, 164, 212), rgb(215, 205, 150));
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    max-width: 700px;
+    width: 100%;
+}
+
+.profile-heading {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 25px;
+    color: #1e3a8a;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.profile-field label {
+    display: block;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.readonly-input,
+.editable-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.readonly-input {
+    background-color: #f0f0f0;
+    color: #666;
+}
+
+.editable-input {
+    background-color: #fff;
+    color: #000;
+}
+
+.edit-button {
+    align-self: flex-start;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    font-size: 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.edit-button:hover {
+    background-color: #1d4ed8;
+}
+
+.message {
+    color: green;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.bookings-title {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #1e3a8a;
+}
+
+.no-bookings {
+    font-style: italic;
+    color: #555;
+}
+
+.bookings-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+}
+
+.booking-card {
+    background-color: #becad8;
+    border: 1px solid #c7ddfc;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.booking-card p {
+    margin: 6px 0;
+    color: #333;
+}
+
+.loading,
+.error {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 100px;
+}
+
+.error {
+    color: red;
+}

@@ -25,14 +25,15 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Connect to MongoDB
-mongoose
-  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+// MongoDB Connection
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
   .then(() => console.log('Connected to MongoDB Atlas'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-// ─── SCHEMAS & MODELS ─────────────────────────────────────────────────────
-
+// Schemas
 const bookingSchema = new mongoose.Schema({
   fullName: String,
   aadharNumber: String,
@@ -58,18 +59,18 @@ const otpSchema = new mongoose.Schema({
   expiresAt: Date,
 });
 
-// Default models
+// Models
 const Booking = mongoose.model('Booking', bookingSchema);
 const User = mongoose.model('User', userSchema);
 const OTP = mongoose.model('OTP', otpSchema);
 
-// Razorpay instance
+// Razorpay setup
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
-// Nodemailer transporter
+// Email setup
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -80,29 +81,18 @@ const transporter = nodemailer.createTransport({
 
 let loggedInUserEmail = null;
 
-// ─── UTILITY FUNCTIONS ─────────────────────────────────────────────────────
+// Middleware: Log user email for debugging
+app.use((req, res, next) => {
+  console.log("Logged-in user email:", loggedInUserEmail);
+  next();
+});
 
-// Generate OTP
+// Helper
 const generateOTP = () => Math.floor(100000 + Math.random() * 900000).toString();
 
-// Dynamically create model for each hotel
-const getHotelBookingModel = (hotelName) => {
-  const modelName = `${hotelName.replace(/\s+/g, '')}Bookings`;
-  if (mongoose.models[modelName]) {
-    return mongoose.models[modelName];
-  } else {
-    return mongoose.model(modelName, new mongoose.Schema({
-      name: String,
-      email: String,
-      selectedDate: Date,
-      event: String,
-    }));
-  }
-};
+// ──────── ROUTES ───────────────────────────────────────────────
 
-// ─── ROUTES ─────────────────────────────────────────────────────────────────
-
-// ── OTP ROUTES ──
+// Send OTP
 app.post('/send-otp', async (req, res) => {
   const { email } = req.body;
   if (!email) return res.status(400).json({ success: false, message: 'Email is required' });
@@ -111,11 +101,7 @@ app.post('/send-otp', async (req, res) => {
     const otp = generateOTP();
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
 
-    await OTP.findOneAndUpdate(
-      { email },
-      { otp, expiresAt },
-      { upsert: true, new: true }
-    );
+    await OTP.findOneAndUpdate({ email }, { otp, expiresAt }, { upsert: true, new: true });
 
     await transporter.sendMail({
       from: process.env.EMAIL_USERNAME,
@@ -131,7 +117,7 @@ app.post('/send-otp', async (req, res) => {
   }
 });
 
-// ── SIGNUP ──
+// Signup
 app.post('/submit-signup', async (req, res) => {
   const { email, username, password, otp } = req.body;
   if (!email || !username || !password || !otp) {
@@ -163,7 +149,7 @@ app.post('/submit-signup', async (req, res) => {
   }
 });
 
-// ── LOGIN ──
+// Login
 app.post('/submit-login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -178,14 +164,13 @@ app.post('/submit-login', async (req, res) => {
   }
 });
 
-
-// ── LOGOUT ──
+// Logout
 app.post('/logout', (_req, res) => {
   loggedInUserEmail = null;
   res.json({ message: 'Logged out' });
 });
 
-// ── GET USER INFO (✅ new added) ──
+// Get user info
 app.get('/get-user-info', async (req, res) => {
   try {
     if (!loggedInUserEmail) {
@@ -202,7 +187,30 @@ app.get('/get-user-info', async (req, res) => {
   }
 });
 
-// ── PAYMENT ──
+// ✨ Update user info
+app.post('/update-user-info', async (req, res) => {
+  const { username } = req.body;
+
+  if (!loggedInUserEmail) {
+    return res.status(401).json({ success: false, message: 'Not logged in' });
+  }
+
+  try {
+    const updated = await User.findOneAndUpdate(
+      { email: loggedInUserEmail },
+      { username },
+      { new: true }
+    );
+    if (!updated) return res.status(404).json({ success: false, message: 'User not found' });
+
+    res.json({ success: true, message: 'Profile updated', user: updated });
+  } catch (err) {
+    console.error('Error in /update-user-info:', err);
+    res.status(500).json({ success: false, message: 'Update failed' });
+  }
+});
+
+// Create Razorpay order
 app.post('/create-order', async (req, res) => {
   try {
     const { amount } = req.body;
@@ -213,7 +221,7 @@ app.post('/create-order', async (req, res) => {
   }
 });
 
-// ── SUBMIT BOOKING ──
+// Submit booking
 app.post('/submit-form', async (req, res) => {
   try {
     await new Booking(req.body).save();
@@ -223,22 +231,45 @@ app.post('/submit-form', async (req, res) => {
   }
 });
 
-// ── FETCH USER BOOKINGS ──
+// 🔁 Get bookings for logged-in user
 app.post('/bookings', async (req, res) => {
   const { email } = req.body;
-  if (email !== loggedInUserEmail) return res.status(403).json({ message: 'Unauthorized' });
 
-  const userBookings = await Booking.find({ email });
-  res.status(userBookings.length ? 200 : 404).json(userBookings);
+  if (!email || email !== loggedInUserEmail) {
+    return res.status(403).json({ success: false, message: 'Unauthorized or email missing' });
+  }
+
+  try {
+    const userBookings = await Booking.find({ email });
+    res.json(userBookings);
+  } catch (err) {
+    console.error('Error fetching bookings:', err);
+    res.status(500).json({ success: false, message: 'Failed to retrieve bookings' });
+  }
 });
 
-// ── ADMIN ALL BOOKINGS ──
+// Admin - get all bookings
 app.get('/admin/bookings', async (_req, res) => {
-  try { res.json(await Booking.find({})); }
-  catch { res.status(500).json({ message: 'Failed to retrieve bookings' }); }
+  try {
+    res.json(await Booking.find({}));
+  } catch {
+    res.status(500).json({ message: 'Failed to retrieve bookings' });
+  }
 });
 
-// ── HOTEL BOOKINGS ──
+// Hotel-specific dynamic model
+const getHotelBookingModel = (hotelName) => {
+  const modelName = `${hotelName.replace(/\s+/g, '')}Bookings`;
+  if (mongoose.models[modelName]) return mongoose.models[modelName];
+  return mongoose.model(modelName, new mongoose.Schema({
+    name: String,
+    email: String,
+    selectedDate: Date,
+    event: String,
+  }));
+};
+
+// Hotel book date
 app.post('/hotel/:hotelName/book-date', async (req, res) => {
   const { hotelName } = req.params;
   const { name, email, selectedDate, event } = req.body;
@@ -253,6 +284,7 @@ app.post('/hotel/:hotelName/book-date', async (req, res) => {
     if (alreadyBooked) {
       return res.status(400).json({ success: false, message: 'Date already booked' });
     }
+
     await new HotelBooking({ name, email, selectedDate, event }).save();
     res.json({ success: true, message: 'Booking successful' });
   } catch (err) {
@@ -261,7 +293,7 @@ app.post('/hotel/:hotelName/book-date', async (req, res) => {
   }
 });
 
-// ── GET BOOKED DATES ──
+// Get hotel booked dates
 app.get('/hotel/:hotelName/booked-dates', async (req, res) => {
   const { hotelName } = req.params;
   try {
@@ -274,18 +306,20 @@ app.get('/hotel/:hotelName/booked-dates', async (req, res) => {
     res.status(500).json({ message: 'Failed to fetch booked dates' });
   }
 });
+
+// Login check
 app.get('/is-logged-in', (req, res) => {
-  if (loggedInUserEmail!=null) {
+  if (loggedInUserEmail != null) {
     res.json({ loggedIn: true, email: loggedInUserEmail });
   } else {
     res.json({ loggedIn: false });
   }
 });
 
-// ─── SERVE REACT BUILD ─────────────────────────────────────────────────────
+// Serve React build
 const buildPath = path.join(__dirname, '../frontend/emsys/build');
 app.use(express.static(buildPath));
 app.get('*', (_, res) => res.sendFile(path.join(buildPath, 'index.html')));
 
-// ─── START SERVER ───────────────────────────────────────────────────────────
+// Start server
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

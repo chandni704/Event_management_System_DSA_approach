@@ -25,7 +25,7 @@ const NavigationBar = () => {
 
     return (
         <div className="navigation-bar">
-            <div className="icon" onClick={() => navigate('/')}>
+            <div className="icon" onClick={() => navigate('/dashboard')}>
                 <img src="/assets/icon.png" alt="Logo" />
             </div>
 
@@ -38,8 +38,8 @@ const NavigationBar = () => {
                 />
                 {menuOpen && (
                     <div className="dropdown-menu">
-                        <button onClick={() => navigate('/mybookings')}>My Bookings</button>
-                        
+                        <button onClick={() => navigate('/profile')}>Profile</button>
+
                         <button onClick={() => navigate('/')}>Logout</button>
                     </div>
                 )}
