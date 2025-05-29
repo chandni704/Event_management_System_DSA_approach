@@ -2,7 +2,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #ffffff;
+  /*background-color: #afcfed;*/
+  background: linear-gradient(0deg, rgb(129, 183, 218), rgb(136, 214, 207));
   padding: 10px 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   position: relative;
