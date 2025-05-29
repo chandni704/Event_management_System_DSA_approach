@@ -258,7 +258,7 @@ const EventBookingForm = () => {
 
             <div className="button-container">
               <input type="submit" value="Book Now" />
-              <input type="button" value="Select Another Date" onClick={resetForm} />
+              <input type="button" value="Reset date" onClick={resetForm} />
               <input type="button" value="Go Home" onClick={goHome} />
             </div>
           </form>

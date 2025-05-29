@@ -73,7 +73,7 @@ input[type="submit"],
 input[type="button"] {
   width: 30%;
   padding: 12px;
-  background-color: #007bff;
+  background: linear-gradient(10deg, rgb(8, 183, 218), rgb(38, 105, 221));
   border: none;
   border-radius: 5px;
   color: #fff;
