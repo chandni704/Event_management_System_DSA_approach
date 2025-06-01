@@ -131,9 +131,11 @@ function Dashboard() {
             >
               <option value="">-- Select Event --</option>
               <option value="Marriage">Marriage</option>
-              <option value="Birthday">Birthday</option>
-              <option value="Naming Ceremony">Naming Ceremony</option>
-              <option value="Official Meeting">Official Meeting</option>
+                    <option value="Birthday">Birthday</option>
+                    <option value="Naming Ceremony">Naming Ceremony</option>
+                    <option value="Official Meetings">Official Meetings</option>
+                    <option value="Baby Shower">Baby Shower</option>
+                    <option value="Half Saree Ceremony">Half Saree Ceremony</option>
             </select>
           </div>
 

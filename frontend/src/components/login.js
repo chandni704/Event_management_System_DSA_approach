@@ -104,7 +104,7 @@ const Login = () => {
               padding: "15px",
               margin: "10px 0",
               borderRadius: "10px",
-              border: "none",
+              border: "rgba(5, 5, 5, 0.2) solid 1px",
               background: "rgba(255, 255, 255, 0.1)",
               color: "#000000", // changed color
               fontSize: "16px",
@@ -121,7 +121,7 @@ const Login = () => {
               padding: "15px",
               margin: "10px 0",
               borderRadius: "10px",
-              border: "none",
+              border: "rgba(12, 12, 12, 0.2) solid 1px",
               background: "rgba(255, 255, 255, 0.1)",
               color: "#000000", // changed color
               fontSize: "16px",

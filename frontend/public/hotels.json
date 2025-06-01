@@ -1,258 +1,477 @@
 [
-    {
-      "id": "H001",
-      "name": "Native Hotel",
-      "area": "Tilakwadi",
-      "supportedEvents": ["Birthday", "Official Meeting"],
-      "images": ["native1.jpg"],
-      "description": "A popular venue in Tilakwadi for weddings and social events.",
-      "capacity": "450",
-      "price": "90000"
-    },
-    {
-      "id": "H002",
-      "name": "Millenium Garden",
-      "area": "Tilakwadi",
-      "supportedEvents": ["Marriage", "Birthday"],
-      "images": ["millennium1.jpg"],
-      "description": "Garden-themed venue ideal for outdoor ceremonies and birthdays.",
-      "capacity": "800",
-      "price": "50000"
-    },
-    {
-      "id": "H003",
-      "name": "Green Garden",
-      "area": "Hanuman Nagar",
-      "supportedEvents": ["Marriage", "Naming Ceremony"],
-      "images": ["green1.jpg"],
-      "description": "Spacious green venue suitable for cultural and family events.",
-      "capacity": "500",
-      "price": "25000"
-    },
-    {
-      "id": "H004",
-      "name": "Netravati Lawns",
-      "area": "Hanuman Nagar",
-      "supportedEvents": ["Marriage", "Official Meeting"],
-      "images": ["netravati1.jpg"],
-      "description": "Large lawn ideal for weddings and business gatherings.",
-      "capacity": "500",
-      "price": "25000"
-
-    },
-    {
-      "id": "H005",
-      "name": "Sankalp Garden",
-      "area": "Ramteerth Nagar",
-      "supportedEvents": ["Marriage", "Birthday"],
-      "images": ["sankalp1.jpg"],
-      "description": "Peaceful garden space with modern amenities for private events.",
-      "capacity": "1000",
-      "price": "60000"
-    },
-    {
-      "id": "H006",
-      "name": "Dharmanath Bhavan",
-      "area": "Sadashiv Nagar",
-      "supportedEvents": ["Naming Ceremony", "Official Meeting", "Marriage"],
-      "images": ["dharmanath1.jpg"],
-      "description": "Traditional indoor venue for small ceremonies and functions.",
-      "capacity": "1000",
-      "price": "80000"
-    },
-    {
-      "id": "H007",
-      "name": "Shivam Function Hall",
-      "area": "Khasbag",
-      "supportedEvents": ["Birthday", "Official Meeting"],
-      "images": ["shivam1.jpg"],
-      "description": "Function hall suitable for birthdays and formal events."
-    },
-    {
-      "id": "H008",
-      "name": "UK 27",
-      "area": "Nehru Nagar",
-      "supportedEvents": ["Birthday", "Official Meeting"],
-      "images": ["uk27.jpg"],
-      "description": "Upscale hotel with banquet and conference facilities.",
-      "capacity": "500",
-      "price": "700000"
-    },
-    {
-      "id": "H009",
-      "name": "Uday Bhavan",
-      "area": "Angol",
-      "supportedEvents": ["Birthday", "Naming Ceremony"],
-      "images": ["uday1.jpg"],
-      "description": "Well-known venue for mid-sized family events."
-    },
-    {
-      "id": "H010",
-      "name": "The Palladium Banquet",
-      "area": "Ganeshpur",
-      "supportedEvents": ["Marriage", "Birthday", "Naming Ceremony"],
-      "images": ["palladium1.jpg"],
-      "description": "Elegant banquet hall ideal for all celebrations.",
-      "capacity": "600",
-      "price": "65000"
-    },
-    {
-      "id": "H011",
-      "name": "Ashirwad Mangal Karyalaya",
-      "area": "Angol",
-      "supportedEvents": ["Marriage", "Birthday", "Naming Ceremony"],
-      "capacity": "1000",
-      "price": "80000"
-    },
-    {
-      "id": "H012",
-      "name": "Pai Resort",
-      "area": "Gandhi Nagar",
-      "supportedEvents": ["Marriage", "Birthday", "Naming Ceremony"],
-      "capacity": "500",
-      "price": "35000"
-    },
-    {
-      "id": "H013",
-      "name": "Manoprabha Karyalaya",
-      "area": "Tilakwadi",
-      "supportedEvents": ["Marriage", "Birthday", "Naming Ceremony"],
-      "capacity": "500",
-      "price": "25000"
-    },
-    {
-      "id": "H014",
-      "name": "Mahatma Gandhi Bhavan",
-      "area": "Main City",
-      "supportedEvents": ["Marriage", "Birthday", "Naming Ceremony"],
-      "capacity": "1000",
-      "price": "90000"
-    },
-    {
-      "id": "H015",
-      "name": "Celebrations",
-      "area": "Udyambag",
-      "supportedEvents": ["Marriage", "Birthday", "Naming Ceremony"],
-      "capacity": "1000",
-      "price": "150000"
-    },
-    {
-      "id": "H016",
-      "name": "Shagun Garden",
-      "area": "Udyambag",
-      "supportedEvents": ["Marriage", "Birthday", "Naming Ceremony"],
-      "capacity": "700",
-      "price": "100000"
-    },
-    {
-      "id": "H017",
-      "name": "KPTCL",
-      "area": "Shree Nagar",
-      "supportedEvents": ["Marriage", "Birthday", "Naming Ceremony"],
-      "capacity": "1000",
-      "price": "70000"
-    },
-    { "id": "H018",
+  {
+    "id": "H001",
+    "name": "Native Hotel",
+    "area": "Tilakwadi",
+    "supportedEvents": [
+      "Baby Shower",
+      "Birthday",
+      "Half Saree Ceremony",
+      "Official Meeting",
+      "Ring Ceremony"
+    ],
+    "images": [
+      "native1.jpg"
+    ],
+    "description": "A popular venue in Tilakwadi for weddings and social events.",
+    "capacity": "450",
+    "price": "90000"
+  },
+  {
+    "id": "H002",
+    "name": "Millenium Garden",
+    "area": "Tilakwadi",
+    "supportedEvents": [
+      "Baby Shower",
+      "Birthday",
+      "Half Saree Ceremony",
+      "Marriage",
+      "Ring Ceremony"
+    ],
+    "images": [
+      "millennium1.jpg"
+    ],
+    "description": "Garden-themed venue ideal for outdoor ceremonies and birthdays.",
+    "capacity": "800",
+    "price": "50000"
+  },
+  {
+    "id": "H003",
+    "name": "Green Garden",
+    "area": "Hanuman Nagar",
+    "supportedEvents": [
+      "Baby Shower",
+      "Half Saree Ceremony",
+      "Marriage",
+      "Naming Ceremony",
+      "Ring Ceremony"
+    ],
+    "images": [
+      "green1.jpg"
+    ],
+    "description": "Spacious green venue suitable for cultural and family events.",
+    "capacity": "500",
+    "price": "25000"
+  },
+  {
+    "id": "H004",
+    "name": "Netravati Lawns",
+    "area": "Hanuman Nagar",
+    "supportedEvents": [
+      "Baby Shower",
+      "Half Saree Ceremony",
+      "Marriage",
+      "Official Meeting",
+      "Ring Ceremony"
+    ],
+    "images": [
+      "netravati1.jpg"
+    ],
+    "description": "Large lawn ideal for weddings and business gatherings.",
+    "capacity": "500",
+    "price": "25000"
+  },
+  {
+    "id": "H005",
+    "name": "Sankalp Garden",
+    "area": "Ramteerth Nagar",
+    "supportedEvents": [
+      "Baby Shower",
+      "Birthday",
+      "Half Saree Ceremony",
+      "Marriage",
+      "Ring Ceremony"
+    ],
+    "images": [
+      "sankalp1.jpg"
+    ],
+    "description": "Peaceful garden space with modern amenities for private events.",
+    "capacity": "1000",
+    "price": "60000"
+  },
+  {
+    "id": "H006",
+    "name": "Dharmanath Bhavan",
+    "area": "Sadashiv Nagar",
+    "supportedEvents": [
+      "Baby Shower",
+      "Half Saree Ceremony",
+      "Marriage",
+      "Naming Ceremony",
+      "Official Meeting",
+      "Ring Ceremony"
+    ],
+    "images": [
+      "dharmanath1.jpg"
+    ],
+    "description": "Traditional indoor venue for small ceremonies and functions.",
+    "capacity": "1000",
+    "price": "80000"
+  },
+  {
+    "id": "H007",
+    "name": "Shivam Function Hall",
+    "area": "Khasbag",
+    "supportedEvents": [
+      "Baby Shower",
+      "Birthday",
+      "Half Saree Ceremony",
+      "Official Meeting",
+      "Ring Ceremony"
+    ],
+    "images": [
+      "shivam1.jpg"
+    ],
+    "description": "Function hall suitable for birthdays and formal events."
+  },
+  {
+    "id": "H008",
+    "name": "UK 27",
+    "area": "Nehru Nagar",
+    "supportedEvents": [
+      "Baby Shower",
+      "Birthday",
+      "Half Saree Ceremony",
+      "Official Meeting",
+      "Ring Ceremony"
+    ],
+    "images": [
+      "uk27.jpg"
+    ],
+    "description": "Upscale hotel with banquet and conference facilities.",
+    "capacity": "500",
+    "price": "700000"
+  },
+  {
+    "id": "H009",
+    "name": "Uday Bhavan",
+    "area": "Angol",
+    "supportedEvents": [
+      "Baby Shower",
+      "Birthday",
+      "Half Saree Ceremony",
+      "Naming Ceremony",
+      "Ring Ceremony"
+    ],
+    "images": [
+      "uday1.jpg"
+    ],
+    "description": "Well-known venue for mid-sized family events."
+  },
+  {
+    "id": "H010",
+    "name": "The Palladium Banquet",
+    "area": "Ganeshpur",
+    "supportedEvents": [
+      "Baby Shower",
+      "Birthday",
+      "Half Saree Ceremony",
+      "Marriage",
+      "Naming Ceremony",
+      "Ring Ceremony"
+    ],
+    "images": [
+      "palladium1.jpg"
+    ],
+    "description": "Elegant banquet hall ideal for all celebrations.",
+    "capacity": "600",
+    "price": "65000"
+  },
+  {
+    "id": "H011",
+    "name": "Ashirwad Mangal Karyalaya",
+    "area": "Angol",
+    "supportedEvents": [
+      "Baby Shower",
+      "Birthday",
+      "Half Saree Ceremony",
+      "Marriage",
+      "Naming Ceremony",
+      "Ring Ceremony"
+    ],
+    "capacity": "1000",
+    "price": "80000"
+  },
+  {
+    "id": "H012",
+    "name": "Pai Resort",
+    "area": "Gandhi Nagar",
+    "supportedEvents": [
+      "Baby Shower",
+      "Birthday",
+      "Half Saree Ceremony",
+      "Marriage",
+      "Naming Ceremony",
+      "Ring Ceremony"
+    ],
+    "capacity": "500",
+    "price": "35000"
+  },
+  {
+    "id": "H013",
+    "name": "Manoprabha Karyalaya",
+    "area": "Tilakwadi",
+    "supportedEvents": [
+      "Baby Shower",
+      "Birthday",
+      "Half Saree Ceremony",
+      "Marriage",
+      "Naming Ceremony",
+      "Ring Ceremony"
+    ],
+    "capacity": "500",
+    "price": "25000"
+  },
+  {
+    "id": "H014",
+    "name": "Mahatma Gandhi Bhavan",
+    "area": "Main City",
+    "supportedEvents": [
+      "Baby Shower",
+      "Birthday",
+      "Half Saree Ceremony",
+      "Marriage",
+      "Naming Ceremony",
+      "Ring Ceremony"
+    ],
+    "capacity": "1000",
+    "price": "90000"
+  },
+  {
+    "id": "H015",
+    "name": "Celebrations",
+    "area": "Udyambag",
+    "supportedEvents": [
+      "Baby Shower",
+      "Birthday",
+      "Half Saree Ceremony",
+      "Marriage",
+      "Naming Ceremony",
+      "Ring Ceremony"
+    ],
+    "capacity": "1000",
+    "price": "150000"
+  },
+  {
+    "id": "H016",
+    "name": "Shagun Garden",
+    "area": "Udyambag",
+    "supportedEvents": [
+      "Baby Shower",
+      "Birthday",
+      "Half Saree Ceremony",
+      "Marriage",
+      "Naming Ceremony",
+      "Ring Ceremony"
+    ],
+    "capacity": "700",
+    "price": "100000"
+  },
+  {
+    "id": "H017",
+    "name": "KPTCL",
+    "area": "Shree Nagar",
+    "supportedEvents": [
+      "Baby Shower",
+      "Birthday",
+      "Half Saree Ceremony",
+      "Marriage",
+      "Naming Ceremony",
+      "Ring Ceremony"
+    ],
+    "capacity": "1000",
+    "price": "70000"
+  },
+  {
+    "id": "H018",
     "name": "Mahant Bhawan",
     "area": "Mahantesh Nagar",
-    "supportedEvents": ["Marriage", "Birthday", "Naming Ceremony"],
+    "supportedEvents": [
+      "Marriage",
+      "Birthday",
+      "Naming Ceremony"
+    ],
     "capacity": "500",
-      "price": "35000"
-    },
-    { "id": "H019",
+    "price": "35000"
+  },
+  {
+    "id": "H019",
     "name": "Sankam Hotel",
     "area": "Gandhi Nagar",
-    "supportedEvents": ["Marriage", "Birthday", "Naming Ceremony"],
+    "supportedEvents": [
+      "Baby Shower",
+      "Birthday",
+      "Half Saree Ceremony",
+      "Marriage",
+      "Naming Ceremony",
+      "Ring Ceremony"
+    ],
     "capacity": "500",
-      "price": "150000"
-    },
-    {
-      "id": "H020",
-      "name": "Paradise Garden",
-      "area": "Auto Nagar",
-      "supportedEvents": ["Marriage", "Birthday", "Naming Ceremony"],
-      "capacity": "1000",
-      "price": "60000"
-    },
-    {
-      "id": "H021",
-      "name": "City Hall",
-      "area": "Bhagya Nagar",
-      "supportedEvents": ["Marriage", "Birthday", "Naming Ceremony"],
-      "capacity": "500",
-      "price": "40000"
-    },
-    {
-      "id": "H022",
-      "name": "Adarsh Palace",
-      "area": "Main City",
-      "supportedEvents": ["Marriage", "Birthday", "Naming Ceremony"],
-      "capacity": "1000",
-      "price": "80000"
-    },
-    {
-      "id": "H023",
-      "name": "Maratha Mandir Karyalaya",
-      "area": "Tilakwadi",
-      "supportedEvents": ["Marriage", "Birthday", "Naming Ceremony"],
-      "capacity": "600",
-      "price": "75000"
-    },
-    {
-      "id": "H024",
-      "name": "Mahaveer Bhavan",
-      "area": "Tilakwadi",
-      "supportedEvents": ["Marriage", "Birthday", "Naming Ceremony"],
-      "capacity": "1000",
-      "price": "75000"
-    },
-    {
-      "id": "H025",
-      "name": "Adinath Bhavan",
-      "area": "Angol",
-      "supportedEvents": ["Marriage", "Birthday", "Naming Ceremony"],
-      "capacity": "500",
-      "price": "25000"
-    },
-    {
-      "id": "H026",
-      "name": "Pink Veranda",
-      "area": "Tilakwadi",
-      "supportedEvents": ["Marriage", "Birthday", "Naming Ceremony"],
-      "capacity": "200",
-      "price": "60000"
-    },
-    {
-      "id": "H027",
-      "name": "Royal Ritz",
-      "area": "Gandhi Nagar",
-      "supportedEvents": ["Marriage", "Birthday", "Naming Ceremony"],
-      "capacity": "500",
-      "price": "200000"
-    },
-    {
-      "id": "H028",
-      "name": "Arman Hall",
-      "area": "Azam Nagar",
-      "supportedEvents": ["Marriage", "Birthday", "Naming Ceremony"],
-      "capacity": "600",
-      "price": "45000"
-    },
-    {
-      "id": "H029",
-      "name": "Ayodhya Function Hall",
-      "area": "Nehru Nagar",
-      "supportedEvents": ["Marriage", "Birthday", "Naming Ceremony"],
-      "capacity": "200",
-      "price": "25000"
-    },
-    {
-      "id": "H030",
-      "name": "Ramanath Marriage Hall",
-      "area": "Bhagya Nagar",
-      "supportedEvents": ["Marriage", "Birthday", "Naming Ceremony"],
-      "capacity": "800",
-      "price": "100000"
-    }
-  ]
-  
+    "price": "150000"
+  },
+  {
+    "id": "H020",
+    "name": "Paradise Garden",
+    "area": "Auto Nagar",
+    "supportedEvents": [
+      "Baby Shower",
+      "Birthday",
+      "Half Saree Ceremony",
+      "Marriage",
+      "Naming Ceremony",
+      "Ring Ceremony"
+    ],
+    "capacity": "1000",
+    "price": "60000"
+  },
+  {
+    "id": "H021",
+    "name": "City Hall",
+    "area": "Bhagya Nagar",
+    "supportedEvents": [
+      "Baby Shower",
+      "Birthday",
+      "Half Saree Ceremony",
+      "Marriage",
+      "Naming Ceremony",
+      "Ring Ceremony"
+    ],
+    "capacity": "500",
+    "price": "40000"
+  },
+  {
+    "id": "H022",
+    "name": "Adarsh Palace",
+    "area": "Main City",
+    "supportedEvents": [
+      "Baby Shower",
+      "Birthday",
+      "Half Saree Ceremony",
+      "Marriage",
+      "Naming Ceremony",
+      "Ring Ceremony"
+    ],
+    "capacity": "1000",
+    "price": "80000"
+  },
+  {
+    "id": "H023",
+    "name": "Maratha Mandir Karyalaya",
+    "area": "Tilakwadi",
+    "supportedEvents": [
+      "Baby Shower",
+      "Birthday",
+      "Half Saree Ceremony",
+      "Marriage",
+      "Naming Ceremony",
+      "Ring Ceremony"
+    ],
+    "capacity": "600",
+    "price": "75000"
+  },
+  {
+    "id": "H024",
+    "name": "Mahaveer Bhavan",
+    "area": "Tilakwadi",
+    "supportedEvents": [
+      "Baby Shower",
+      "Birthday",
+      "Half Saree Ceremony",
+      "Marriage",
+      "Naming Ceremony",
+      "Ring Ceremony"
+    ],
+    "capacity": "1000",
+    "price": "75000"
+  },
+  {
+    "id": "H025",
+    "name": "Adinath Bhavan",
+    "area": "Angol",
+    "supportedEvents": [
+      "Baby Shower",
+      "Birthday",
+      "Half Saree Ceremony",
+      "Marriage",
+      "Naming Ceremony",
+      "Ring Ceremony"
+    ],
+    "capacity": "500",
+    "price": "25000"
+  },
+  {
+    "id": "H026",
+    "name": "Pink Veranda",
+    "area": "Tilakwadi",
+    "supportedEvents": [
+      "Baby Shower",
+      "Birthday",
+      "Half Saree Ceremony",
+      "Marriage",
+      "Naming Ceremony",
+      "Ring Ceremony"
+    ],
+    "capacity": "200",
+    "price": "60000"
+  },
+  {
+    "id": "H027",
+    "name": "Royal Ritz",
+    "area": "Gandhi Nagar",
+    "supportedEvents": [
+      "Baby Shower",
+      "Birthday",
+      "Half Saree Ceremony",
+      "Marriage",
+      "Naming Ceremony",
+      "Ring Ceremony"
+    ],
+    "capacity": "500",
+    "price": "200000"
+  },
+  {
+    "id": "H028",
+    "name": "Arman Hall",
+    "area": "Azam Nagar",
+    "supportedEvents": [
+      "Baby Shower",
+      "Birthday",
+      "Half Saree Ceremony",
+      "Marriage",
+      "Naming Ceremony",
+      "Ring Ceremony"
+    ],
+    "capacity": "600",
+    "price": "45000"
+  },
+  {
+    "id": "H029",
+    "name": "Ayodhya Function Hall",
+    "area": "Nehru Nagar",
+    "supportedEvents": [
+      "Baby Shower",
+      "Birthday",
+      "Half Saree Ceremony",
+      "Marriage",
+      "Naming Ceremony",
+      "Ring Ceremony"
+    ],
+    "capacity": "200",
+    "price": "25000"
+  },
+  {
+    "id": "H030",
+    "name": "Ramanath Marriage Hall",
+    "area": "Bhagya Nagar",
+    "supportedEvents": [
+      "Baby Shower",
+      "Birthday",
+      "Half Saree Ceremony",
+      "Marriage",
+      "Naming Ceremony",
+      "Ring Ceremony"
+    ],
+    "capacity": "800",
+    "price": "100000"
+  }
+]

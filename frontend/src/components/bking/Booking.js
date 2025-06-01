@@ -244,13 +244,12 @@ const EventBookingForm = () => {
             <label htmlFor="event">Event Type</label>
             <select name="event" id="event" value={formData.event} onChange={handleChange}>
               <option value="">-- Select --</option>
-              <option value="Wedding">Wedding</option>
-              <option value="Birthday">Birthday</option>
-              <option value="Naming Ceremony">Naming Ceremony</option>
-              <option value="Kitty Party">Kitty Party</option>
-              <option value="Official Meetings">Official Meetings</option>
-              <option value="Concert">Concert</option>
-              <option value="Party">Party</option>
+              <option value="Marriage">Marriage</option>
+                    <option value="Birthday">Birthday</option>
+                    <option value="Naming Ceremony">Naming Ceremony</option>
+                    <option value="Official Meetings">Official Meetings</option>
+                    <option value="Baby Shower">Baby Shower</option>
+                    <option value="Half Saree Ceremony">Half Saree Ceremony</option>
             </select>
 
             <label htmlFor="hall">Venue</label>

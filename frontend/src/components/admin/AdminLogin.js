@@ -45,13 +45,13 @@ const AdminLogin = () => {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    background: linear-gradient(135deg, #1f2937, #111827);
+                    background: linear-gradient(135deg,rgb(6, 7, 7),rgb(216, 221, 231));
                     font-family: 'Poppins', sans-serif;
                 }
 
                 .admin-login-card {
-                    background: rgba(255, 255, 255, 0.05);
-                    border: 1px solid rgba(255, 255, 255, 0.15);
+                    background: rgba(223, 153, 153, 0.05);
+                    border: 1px solid rgba(29, 21, 21, 0.15);
                     padding: 50px 40px;
                     border-radius: 20px;
                     backdrop-filter: blur(20px);
@@ -74,9 +74,9 @@ const AdminLogin = () => {
                 .admin-login-card input {
                     padding: 12px 16px;
                     border-radius: 10px;
-                    border: none;
+                    border: rgba(7, 7, 7, 0.2) solid 1px;
                     background-color: rgba(255, 255, 255, 0.1);
-                    color: #fff;
+                    color:rgb(252, 251, 251);
                     font-size: 1rem;
                     outline: none;
                     transition: background-color 0.3s ease;

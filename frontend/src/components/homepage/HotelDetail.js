@@ -1,4 +1,3 @@
-// HotelDetail.js
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Carousel } from "react-responsive-carousel";
@@ -7,20 +6,25 @@ import axios from "axios";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "react-calendar/dist/Calendar.css";
 import "./HotelDetail.css";
+import mammoth from "mammoth";
 
 function HotelDetail() {
   const { hotelName } = useParams();
   const [hotel, setHotel] = useState(null);
-  const [description, setDescription] = useState("");
+  const [descriptionHTML, setDescriptionHTML] = useState("");
   const [bookedDates, setBookedDates] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
   const [userInfo, setUserInfo] = useState({ fullName: "", email: "" });
   const [loading, setLoading] = useState(true);
   const [chatVisible, setChatVisible] = useState(false);
   const navigate = useNavigate();
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [showBookButton, setShowBookButton] = useState(false);
+
 
   useEffect(() => {
     setLoading(true);
+
     fetch("/hotels.json")
       .then((res) => res.json())
       .then((data) => {
@@ -28,9 +32,17 @@ function HotelDetail() {
         setHotel(found);
 
         if (found) {
-          fetch(`/venues/${found.name}/description/desc.txt`)
-            .then((res) => res.text())
-            .then((text) => setDescription(text));
+          fetch(`/venues/${found.name}/description/desc.docx`)
+            .then((res) => res.arrayBuffer())
+            .then((arrayBuffer) =>
+              mammoth.convertToHtml({ arrayBuffer })
+            )
+            .then((result) => {
+              setDescriptionHTML(result.value); // HTML with formatting
+            })
+            .catch((err) => {
+              console.error("Error reading docx:", err);
+            });
         }
       });
 
@@ -123,40 +135,56 @@ function HotelDetail() {
               <p className="detail"><strong>💰 Price:</strong> ₹{hotel.price}</p>
             </div>
 
-            
-          </div>
+            <div className="centeredButton">
+            <button
+             className="bookButton"
+             onClick={() => setShowCalendar(true)}
+             style={{ marginBottom: "20px" }}
+           >
+           Select Date
+            </button>
+        </div>
+        </div>
         </div>
 
+        {showCalendar && (
         <div className="calendarWrapper animate__animated animate__zoomIn">
-          <h3 className="subHeading">🗓 Select a Date:</h3>
-          <div className="custom-calendar">
-            <Calendar
-              onChange={handleDateChange}
-              value={selectedDate ? new Date(selectedDate) : null}
-              tileDisabled={tileDisabled}
-              minDate={new Date()}
-              className="react-calendar"
-            />
-          </div>
-        </div>
+         <h3 className="subHeading">🗓 Select a Date:</h3>
+    <div className="custom-calendar">
+      <Calendar
+        onChange={(date) => {
+          handleDateChange(date);
+          setShowBookButton(true);
+        }}
+        value={selectedDate ? new Date(selectedDate) : null}
+        tileDisabled={tileDisabled}
+        minDate={new Date()}
+        className="react-calendar"
+      />
+    </div>
+  </div>
+)}
 
-        <div className="bookNowWrapper centeredButton">
-          <button onClick={handleBookNow} className="bookButton">
-            Book Now
-          </button>
-        </div>
+
+        {showBookButton && (
+  <div className="bookNowWrapper centeredButton">
+    <button onClick={handleBookNow} className="bookButton">
+      Book Now
+    </button>
+  </div>
+)}
+
 
         <div className="descriptionBox animate__animated animate__fadeIn">
           <h3 className="subHeading">📝 Description</h3>
-          <ul className="descriptionList">
-            {description.split('\n').map((line, index) =>
-              line.trim() ? <li key={index}>{line.trim()}</li> : null
-            )}
-          </ul>
+          <div
+            className="descriptionContent"
+            dangerouslySetInnerHTML={{ __html: descriptionHTML }}
+          />
         </div>
       </div>
 
-      {/* Chatbot Toggle Button */}
+      {/* Chatbot Button */}
       <button
         onClick={() => setChatVisible(!chatVisible)}
         style={{
@@ -164,7 +192,6 @@ function HotelDetail() {
           bottom: "30px",
           right: "30px",
           backgroundColor: "white",
-          color: "white",
           border: "none",
           borderRadius: "50%",
           width: "60px",
@@ -180,7 +207,6 @@ function HotelDetail() {
         <img src="/customer-service.png" alt="Chat" style={{ width: "28px", height: "28px" }} />
       </button>
 
-      {/* Chatbot iframe with slide animation */}
       <div
         style={{
           position: "fixed",

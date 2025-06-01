@@ -131,7 +131,7 @@ const SignUp = () => {
         width: 350px;
         color: white;
         z-index: 2;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+        box-shadow: 0 20px 40px rgba(77, 46, 46, 0.6);
       }
 
       .signup-title {
@@ -141,14 +141,15 @@ const SignUp = () => {
         color: #f8c46a;
         text-shadow: 0 0 10px #f8c46a66;
       }
+        
 
       .signup-input {
         margin: 10px 0;
         padding: 15px;
         border-radius: 10px;
-        border: none;
+        border: rgba(5, 5, 5, 0.2) solid 1px;
         background: rgba(255, 255, 255, 0.1);
-        color: #000000;
+        color:rgb(5, 5, 5);
         font-size: 16px;
         width: 100%;
       }
@@ -242,6 +243,8 @@ const SignUp = () => {
         .signup-title {
           font-size: 1.8rem;
         }
+
+        
       }
     `}</style>
   </>
