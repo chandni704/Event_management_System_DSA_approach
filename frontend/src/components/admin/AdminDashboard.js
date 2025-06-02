@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Home.css';
 
@@ -7,6 +8,9 @@ const Home = () => {
     const [filteredBookings, setFilteredBookings] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+
+    const navigate = useNavigate();
+
 
     const [filters, setFilters] = useState({
         event: '',
@@ -38,8 +42,8 @@ const Home = () => {
 
     useEffect(() => {
         const filtered = bookings.filter((b) => {
-            const eventMatch = !filters.event || b.event === filters.event;
-            const venueMatch = !filters.venue || b.hall === filters.venue;
+            const eventMatch = !filters.event || b.event.toLowerCase() === filters.event.toLowerCase();
+            const venueMatch = !filters.venue || b.hall.toLowerCase() === filters.venue.toLowerCase();
             const monthMatch = !filters.month || new Date(b.eventDate).getMonth() + 1 === parseInt(monthMap[filters.month]);
             return eventMatch && venueMatch && monthMatch;
         });
@@ -51,8 +55,15 @@ const Home = () => {
         setFilters({ ...filters, [name]: value });
     };
 
+    const handleLogout = () => {
+        // Add real logout logic as needed (e.g., token clear)
+        navigate('/')
+    };
+
     return (
         <div className="dashboard">
+            <button className="logout-btn" onClick={handleLogout}>Logout</button>
+
             <aside className="sidebar">
                 <h2>Filter By</h2>
                 <label>Event Type</label>
@@ -69,36 +80,36 @@ const Home = () => {
                 <label>Venue</label>
                 <select name="venue" value={filters.venue} onChange={handleFilterChange}>
                     <option value="">All</option>
+                    {/* venue options unchanged */}
                     <option value="UK 27">UK 27</option>
-<option value="Green Garden">Green Garden</option>
-<option value="Dharmanath Bhavan">Dharmanath Bhavan</option>
-<option value="Millennium garden">Millennium garden</option>
-<option value="Shagun Garden">Shagun Garden</option>
-<option value="Mahatma Gandhi Bhavan">Mahatma Gandhi Bhavan</option>
-<option value="Maratha Mandir Karayalya">Maratha Mandir Karayalya</option>
-<option value="Ramanath Mangal Karayalya">Ramanath Mangal Karayalya</option>
-<option value="Sankalp Garden">Sankalp Garden</option>
-<option value="Native hotel">Native hotel</option>
-<option value="The Pallidum Banquet">The Pallidum Banquet</option>
-<option value="Ashirwad Mangal Karayal">Ashirwad Mangal Karayal</option>
-<option value="Pai Resort">Pai Resort</option>
-<option value="Manoprabha Karyalaya">Manoprabha Karyalaya</option>
-<option value="Celebrations">Celebrations</option>
-<option value="KPTCL">KPTCL</option>
-<option value="Mahant Bhavan">Mahant Bhavan</option>
-<option value="Sankam Hotel">Sankam Hotel</option>
-<option value="Paradise Garden">Paradise Garden</option>
-<option value="City Hall">City Hall</option>
-<option value="Adarsha Palace">Adarsha Palace</option>
-<option value="Maratha Mandir Karyalaya">Maratha Mandir Karyalaya</option>
-<option value="Mahaveer Bhavan">Mahaveer Bhavan</option>
-<option value="Adinath Bhavan">Adinath Bhavan</option>
-<option value="Pink Veranda">Pink Veranda</option>
-<option value="Royal Ritz">Royal Ritz</option>
-<option value="Armaan Hall">Armaan Hall</option>
-<option value="Ayodhya Function hall">Ayodhya Function hall</option>
-<option value="Ramanath Marriage Hall">Ramanath Marriage Hall</option>
-
+                    <option value="Green Garden">Green Garden</option>
+                    <option value="Dharmanath Bhavan">Dharmanath Bhavan</option>
+                    <option value="Millennium garden">Millenium Garden</option>
+                    <option value="Shagun Garden">Shagun Garden</option>
+                    <option value="Mahatma Gandhi Bhavan">Mahatma Gandhi Bhavan</option>
+                    <option value="Maratha Mandir Karayalya">Maratha Mandir Karayalya</option>
+                    <option value="Ramanath Mangal Karayalya">Ramanath Mangal Karayalya</option>
+                    <option value="Sankalp Garden">Sankalp Garden</option>
+                    <option value="Native hotel">Native Hotel</option>
+                    <option value="The Pallidum Banquet">The Pallidum Banquet</option>
+                    <option value="Ashirwad Mangal Karayal">Ashirwad Mangal Karayal</option>
+                    <option value="Pai Resort">Pai Resort</option>
+                    <option value="Manoprabha Karyalaya">Manoprabha Karyalaya</option>
+                    <option value="Celebrations">Celebrations</option>
+                    <option value="KPTCL">KPTCL</option>
+                    <option value="Mahant Bhavan">Mahant Bhavan</option>
+                    <option value="Sankam Hotel">Sankam Hotel</option>
+                    <option value="Paradise Garden">Paradise Garden</option>
+                    <option value="City Hall">City Hall</option>
+                    <option value="Adarsha Palace">Adarsha Palace</option>
+                    <option value="Maratha Mandir Karyalaya">Maratha Mandir Karyalaya</option>
+                    <option value="Mahaveer Bhavan">Mahaveer Bhavan</option>
+                    <option value="Adinath Bhavan">Adinath Bhavan</option>
+                    <option value="Pink Veranda">Pink Veranda</option>
+                    <option value="Royal Ritz">Royal Ritz</option>
+                    <option value="Armaan Hall">Armaan Hall</option>
+                    <option value="Ayodhya Function hall">Ayodhya Function hall</option>
+                    <option value="Ramanath Marriage Hall">Ramanath Marriage Hall</option>
                 </select>
 
                 <label>Month</label>

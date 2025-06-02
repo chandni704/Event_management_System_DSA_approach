@@ -1,22 +1,57 @@
-/* Home.css */
+:root {
+    --bg-image: url('./Hetel_details.jpg');
+    /* You can change this for different backgrounds */
+}
+
+html,
 body {
     margin: 0;
+    padding: 0;
+    height: 100%;
     font-family: 'Segoe UI', sans-serif;
-    background-color: #ffffff;
+    background: var(--bg-image) no-repeat center center fixed;
+    background-size: cover;
     color: #1a1a1a;
+    overflow-x: hidden;
 }
 
 .dashboard {
     display: flex;
     height: 100vh;
+    width: 100vw;
+    backdrop-filter: blur(4px);
+    /*background-color: blue;*/
+    /* optional color overlay */
+    position: relative;
+}
+
+.logout-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #ff4d4f;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    z-index: 10;
+}
+
+.logout-btn:hover {
+    background-color: #e60000;
 }
 
 .sidebar {
     width: 260px;
-    background-color: #f4f4f4;
+    background-color: rgba(244, 244, 244, 0.9);
     padding: 20px;
     border-right: 1px solid #dddddd;
     transition: all 0.3s ease;
+    background: var(--bg-image) no-repeat center center fixed;
+    background-size: cover;
 }
 
 .sidebar h2 {
@@ -52,7 +87,8 @@ body {
 .content {
     flex-grow: 1;
     padding: 30px;
-    background-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.95);
+    overflow-y: auto;
 }
 
 .content h1 {
