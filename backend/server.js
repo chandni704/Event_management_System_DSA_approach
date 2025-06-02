@@ -317,7 +317,7 @@ app.get('/is-logged-in', (req, res) => {
 });
 
 // Serve React build
-const buildPath = path.join(__dirname, '../frontend/emsys/build');
+const buildPath = path.join(__dirname, '../frontend/build');
 app.use(express.static(buildPath));
 app.get('*', (_, res) => res.sendFile(path.join(buildPath, 'index.html')));
 
