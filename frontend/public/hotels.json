@@ -68,8 +68,8 @@
       "netravati1.jpg"
     ],
     "description": "Large lawn ideal for weddings and business gatherings.",
-    "capacity": "500",
-    "price": "25000"
+    "capacity": "1000",
+    "price": "50000"
   },
   {
     "id": "H005",
@@ -122,7 +122,9 @@
     "images": [
       "shivam1.jpg"
     ],
-    "description": "Function hall suitable for birthdays and formal events."
+    "description": "Function hall suitable for birthdays and formal events.",
+    "capacity": "1200",
+    "price": "90000"
   },
   {
     "id": "H008",
@@ -156,7 +158,9 @@
     "images": [
       "uday1.jpg"
     ],
-    "description": "Well-known venue for mid-sized family events."
+    "description": "Well-known venue for mid-sized family events.",
+    "capacity": "700",
+    "price": "85000"
   },
   {
     "id": "H010",
