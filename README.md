@@ -1,6 +1,4 @@
-Here's a high-quality, professional `README.md` content tailored for your **Event Management System – DSA & AIML Approach** project. It reflects all core technical, AI, and system design aspects extracted from your documentation:
 
----
 
 ````markdown
 # 🎉 Event Management System – DSA & AIML Approach
