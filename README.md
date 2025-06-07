@@ -1,6 +1,4 @@
 
-
-````markdown
 # 🎉 Event Management System – DSA & AIML Approach
 
 A smart, AI-powered platform designed to automate and optimize event planning — from venue discovery to booking confirmation — integrating classical algorithms and modern web technologies.
