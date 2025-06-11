@@ -11,6 +11,9 @@ const SignUp = () => {
     confirmPassword: '',
     otp: '',
   });
+
+  const backendUrl = process.env.REACT_APP_BACKEND_BASE_URL;
+
   const [step, setStep] = useState(1);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -28,7 +31,7 @@ const SignUp = () => {
       return;
     }
     try {
-      const res = await axios.post('http://localhost:5000/send-otp', { email: formData.email });
+      const res = await axios.post(`${backendUrl}/send-otp`, { email: formData.email });
       if (res.data.success) {
         setSuccess(res.data.message);
         setStep(2);
@@ -51,7 +54,7 @@ const SignUp = () => {
     }
 
     try {
-      const res = await axios.post('http://localhost:5000/submit-signup', formData);
+      const res = await axios.post(`${backendUrl}/submit-signup`, formData);
       if (res.data.success) {
         navigate('/login');
       } else {
@@ -63,44 +66,44 @@ const SignUp = () => {
   };
 
   return (
-  <>
-    <div className="signup-container">
-      {/* Background Bokeh Lights */}
-      <div className="bokeh b1"></div>
-      <div className="bokeh b2"></div>
-      <div className="bokeh b3"></div>
+    <>
+      <div className="signup-container">
+        {/* Background Bokeh Lights */}
+        <div className="bokeh b1"></div>
+        <div className="bokeh b2"></div>
+        <div className="bokeh b3"></div>
 
-      <form onSubmit={verifyAndSignup} className="signup-card">
-        <h2 className="signup-title">Sign Up</h2>
+        <form onSubmit={verifyAndSignup} className="signup-card">
+          <h2 className="signup-title">Sign Up</h2>
 
-        {step === 1 && (
-          <>
-            <input name="username" placeholder="Username" value={formData.username} onChange={handleChange} className="signup-input" />
-            <input name="email" type="email" placeholder="Email" value={formData.email} onChange={handleChange} className="signup-input" />
-            <input name="password" type="password" placeholder="Password" value={formData.password} onChange={handleChange} className="signup-input" />
-            <input name="confirmPassword" type="password" placeholder="Confirm Password" value={formData.confirmPassword} onChange={handleChange} className="signup-input" />
-            <button type="button" onClick={sendOTP} className="signup-button">Send OTP</button>
-          </>
-        )}
+          {step === 1 && (
+            <>
+              <input name="username" placeholder="Username" value={formData.username} onChange={handleChange} className="signup-input" />
+              <input name="email" type="email" placeholder="Email" value={formData.email} onChange={handleChange} className="signup-input" />
+              <input name="password" type="password" placeholder="Password" value={formData.password} onChange={handleChange} className="signup-input" />
+              <input name="confirmPassword" type="password" placeholder="Confirm Password" value={formData.confirmPassword} onChange={handleChange} className="signup-input" />
+              <button type="button" onClick={sendOTP} className="signup-button">Send OTP</button>
+            </>
+          )}
 
-        {step === 2 && (
-          <>
-            <input name="otp" placeholder="Enter OTP" value={formData.otp} onChange={handleChange} className="signup-input" />
-            <button type="submit" className="signup-button">Verify & Signup</button>
-            <button type="button" onClick={sendOTP} className="signup-button resend-btn">Resend OTP</button>
-          </>
-        )}
+          {step === 2 && (
+            <>
+              <input name="otp" placeholder="Enter OTP" value={formData.otp} onChange={handleChange} className="signup-input" />
+              <button type="submit" className="signup-button">Verify & Signup</button>
+              <button type="button" onClick={sendOTP} className="signup-button resend-btn">Resend OTP</button>
+            </>
+          )}
 
-        {error && <p className="signup-error">{error}</p>}
-        {success && <p className="signup-success">{success}</p>}
+          {error && <p className="signup-error">{error}</p>}
+          {success && <p className="signup-success">{success}</p>}
 
-        <p className="signup-footer">
-          Already have an account? <a href="/login" className="signup-link">Login</a>
-        </p>
-      </form>
-    </div>
+          <p className="signup-footer">
+            Already have an account? <a href="/login" className="signup-link">Login</a>
+          </p>
+        </form>
+      </div>
 
-    <style>{`
+      <style>{`
       * {
         margin: 0;
         padding: 0;
@@ -247,7 +250,7 @@ const SignUp = () => {
         
       }
     `}</style>
-  </>
-);
+    </>
+  );
 };
 export default SignUp;
