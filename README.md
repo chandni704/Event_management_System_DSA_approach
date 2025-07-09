@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 # 🎉 Event Management System – DSA & AIML Approach
 
@@ -152,28 +151,3 @@ npm start
 * Vanashree A N (02FE22BCS171)
 
 👨‍🏫 **Guided By**: *Dr. Priyanka Gavade*
-
----
-
-## 📄 License
-
-This project is open-sourced under the [MIT License](./LICENSE).
-
----
-
-## 📬 Contact & Acknowledgment
-
-Thanks to:
-
-* Razorpay for Payment APIs
-* Hugging Face for Transformers
-* MongoDB Atlas for free-tier DB hosting
-* KLE Tech for academic support and infrastructure
-
-📧 For queries, reach out at: \[[prashantuppar2004@gmail.com](mailto:your-email@example.com)]
-
-
-=======
-# Event_management_System_DSA_approach
-Minor Project 
->>>>>>> 210e740aff6f04fcd7324867c5798d476a0aaa9e
