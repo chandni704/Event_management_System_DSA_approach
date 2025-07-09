@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 # 🎉 Event Management System – DSA & AIML Approach
 
@@ -172,3 +173,7 @@ Thanks to:
 📧 For queries, reach out at: \[[prashantuppar2004@gmail.com](mailto:your-email@example.com)]
 
 
+=======
+# Event_management_System_DSA_approach
+Minor Project 
+>>>>>>> 210e740aff6f04fcd7324867c5798d476a0aaa9e
